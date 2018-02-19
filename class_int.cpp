@@ -46,6 +46,11 @@ public:
 			m_pCoeff[i] = stol( str.substr(len - (i+1)*m_nExp, m_nExp) );
 		}
 	}
+
+	BigInt(istream& sin, int nExp){
+		m_nExp = nExp;
+		readFromStream(sin);
+	}
 	
 	
 	~BigInt(){
