@@ -2,12 +2,16 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
+#include <vector>
 
 using namespace std;
 
 class BigInt {
 	int m_nExp; // степень числа 10
-	int* m_pCoeff; // Массив коэффициентов
+	
+	// http://www.cplusplus.com/reference/vector/vector/reserve/
+	
+	vector<int> m_pCoeff; // Массив коэффициентов
 public:
 	size_t m_nPow; // кол-во знаков
 	bool m_bSign; // знак числа
@@ -23,7 +27,7 @@ public:
 		m_bSign = false; // +
 		m_nExp = nExp;
 		m_nPow = nPow;
-		m_pCoeff = new int[m_nPow];
+		m_pCoeff.reserve(m_nPow);
 		fillWith0();
 	}
 	
@@ -41,7 +45,7 @@ public:
 		size_t len = str.length();
 		m_nPow = len / m_nExp; // Эта длина уже учитывает "запасные" нули в начале строки, поэтому можно округлить до меньшего
 		// http://www.cplusplus.com/reference/string/stol/
-		m_pCoeff = new int[m_nPow];
+		m_pCoeff.reserve(m_nPow);
 		fillWith0();
 		for (size_t i = 0; i < m_nPow; i++) {
 			m_pCoeff[i] = stol( str.substr(len - (i+1)*m_nExp, m_nExp) );
@@ -71,7 +75,7 @@ public:
 	}
 	
 	~BigInt(){
-		delete[] m_pCoeff;
+		//delete[] m_pCoeff;
 	}
 	
 	int& operator[] (size_t i) {
