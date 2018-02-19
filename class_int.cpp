@@ -26,25 +26,6 @@ public:
 		fillWith0();
 	}
 	
-	BigInt(int nExp, char* str) {
-		m_nExp = nExp;
-		m_bSign = false;
-		if (*str == '-') {
-			m_bSign = true;
-			str++; // Отбрасываем знак
-		}
-		size_t len = strlen(str);
-		m_nPow = (len - 1) / m_nExp + 1;
-		char* buf = new char[m_nExp + 1];
-		
-		size_t part = len % m_nExp;
-		
-		//m_pCoeff[m_nPow - 1] = atoi( strcpy( str, buf, part ) );
-		for (size_t i = len % m_nExp; i < len; i += m_nExp){
-			
-		}
-	}
-	
 	void readFromStream(istream& sin){
 		m_bSign = false;
 		string str;
