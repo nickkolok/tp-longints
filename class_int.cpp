@@ -1,6 +1,7 @@
 #include <cstring>
 #include <iostream>
 #include <cstdlib>
+#include <iomanip>
 
 using namespace std;
 
@@ -52,6 +53,22 @@ public:
 		readFromStream(sin);
 	}
 	
+	void writeToStream(ostream& sout){
+		if(m_bSign){
+			sout << "-";
+		}
+		int i = m_nPow - 1;
+		while (!m_pCoeff[i]) {
+			// Пропускаем ведущие нули.
+			// TODO: их вообще не должно быть
+			i--;
+		}
+		sout << m_pCoeff[i];
+		i--;	
+		for(; i >= 0 ; i--){
+			sout << setw(m_nExp) << setfill('0') << m_pCoeff[i];
+		}
+	}
 	
 	~BigInt(){
 		delete[] m_pCoeff;
