@@ -15,6 +15,9 @@ int main(){
 	//b.readFromStream(cin);
 	//cout << b[0] << endl;
 	//cout << b[1] << endl;
+	cout << b.size() << endl;
+	b.normalizeSize();
+	cout << b.size() << endl;
 	b.writeToStream(cout);
 	cout << endl;
 	
@@ -22,6 +25,9 @@ int main(){
 	//b.readFromStream(cin);
 	//cout << b2[0] << endl;
 	//cout << b2[1] << endl;
+	cout << b2.size() << endl;
+	b2.normalizeSize();
+	cout << b2.size() << endl;
 	b2.writeToStream(cout);
 	cout << endl;
 
