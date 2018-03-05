@@ -136,3 +136,31 @@ BigInt sumNaive(BigInt x1, BigInt x2) {
 
 	return sum;
 }
+
+int compareAbs(BigInt a1, BigInt a2){
+	// Returns 0, if equal
+	// >0, if a is bigger than b
+	// <0 otherwise
+	a1.normalizeSize();
+	a2.normalizeSize();
+
+	size_t size1 = a1.size(), size2 = a2.size();
+
+	if( size1 > size2){
+		return size1;
+	}
+	if( size2 > size1){
+		return -size2;
+	}
+
+	//sizes of arrays are equal
+	for (int i = size1 - 1; i>=0; i--){
+		if (a1[i] > a2[i]) {
+			return i + 1;
+		}
+		if (a1[i] < a2[i]) {
+			return - i - 1;
+		}
+	}
+	return 0;
+}

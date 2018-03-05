@@ -36,9 +36,12 @@ int main(){
 	BigInt b1(cin, 9);
 	BigInt b2(cin, 9);
 
-	BigInt b3 = sumNaive(b1, b2);
-	b3.writeToStream(cout);
+	//BigInt b3 = sumNaive(b1, b2);
+	//b3.writeToStream(cout);
 
+	cout << b1.size() << " " << b2.size() << endl;
+	cout << compareAbs(b1, b2) << endl;
+	cout << compareAbs(b2, b1) << endl;
 
 
 	return 0;
