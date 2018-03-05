@@ -39,9 +39,14 @@ int main(){
 	//BigInt b3 = sumNaive(b1, b2);
 	//b3.writeToStream(cout);
 
+/*
 	cout << b1.size() << " " << b2.size() << endl;
 	cout << compareAbs(b1, b2) << endl;
 	cout << compareAbs(b2, b1) << endl;
+*/
+
+	BigInt b3 = subtractNaive(b1, b2);
+	b3.writeToStream(cout);
 
 
 	return 0;

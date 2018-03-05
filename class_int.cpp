@@ -111,7 +111,7 @@ BigInt sumNaive(BigInt x1, BigInt x2) {
 
 	for (size_t i = 1; i < size2; i++){
 		sum[i] = x1[i] + x2[i];
-		if(sum[i - 1] > x1.m_nBase) {
+		if(sum[i - 1] >= x1.m_nBase) {
 			sum[i - 1] -= x1.m_nBase;
 			sum[i]++;
 		}
@@ -163,4 +163,37 @@ int compareAbs(BigInt a1, BigInt a2){
 		}
 	}
 	return 0;
+}
+
+
+BigInt subtractNaive(BigInt x1, BigInt x2) {
+	// TODO: check if x1 and x2 have equal exponents
+
+	// Assume x1 > x2
+
+	size_t size1 = x1.size(), size2 = x2.size();
+
+	BigInt sum(x1.m_nExp, size1);
+
+	sum.m_pCoeff[0] = x1[0] - x2[0];
+
+
+
+	for (size_t i = 1; i < size2; i++){
+		sum[i] = x1[i] - x2[i];
+		if(sum[i - 1] < 0) {
+			sum[i - 1] += x1.m_nBase;
+			sum[i]--;
+		}
+	}
+
+	for (size_t i = size2; i < size1; i++){
+		sum[i] = x1[i];
+		if(sum[i - 1] < 0) {
+			sum[i - 1] += x1.m_nBase;
+			sum[i]--;
+		}
+	}
+
+	return sum;
 }
