@@ -10,7 +10,7 @@ int main(){
 //	cout << sizeof(int) << endl;
 //	cout << (atoi("123")-atoi("10")) << endl;
 
-
+/*
 	BigInt b(cin, 9);
 	//b.readFromStream(cin);
 	//cout << b[0] << endl;
@@ -20,7 +20,7 @@ int main(){
 	cout << b.size() << endl;
 	b.writeToStream(cout);
 	cout << endl;
-	
+
 	BigInt b2(cin, 7);
 	//b.readFromStream(cin);
 	//cout << b2[0] << endl;
@@ -30,7 +30,14 @@ int main(){
 	cout << b2.size() << endl;
 	b2.writeToStream(cout);
 	cout << endl;
+*/
 
+
+	BigInt b1(cin, 9);
+	BigInt b2(cin, 9);
+
+	BigInt b3 = sumNaive(b1, b2);
+	b3.writeToStream(cout);
 
 
 

@@ -3,16 +3,18 @@
 #include <cstdlib>
 #include <iomanip>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
 class BigInt {
-	int m_nExp; // степень числа 10
 
 	// http://www.cplusplus.com/reference/vector/vector/reserve/
 
-	vector<int> m_pCoeff; // Массив коэффициентов
 public:
+	vector<int> m_pCoeff; // Массив коэффициентов
+	int m_nExp; // степень числа 10
+	int m_nBase; // 10 в степени m_nExp
 	bool m_bSign; // знак числа
 
 
@@ -30,7 +32,8 @@ public:
 	BigInt(int nExp, int nPow) {
 		m_bSign = false; // +
 		m_nExp = nExp;
-		m_pCoeff.reserve(nPow);
+		m_nBase = pow(10, nExp);
+		m_pCoeff.resize(nPow);
 		fillWith0();
 	}
 
@@ -48,7 +51,7 @@ public:
 		size_t len = str.length();
 		size_t nPow = len / m_nExp; // Эта длина уже учитывает "запасные" нули в начале строки, поэтому можно округлить до меньшего
 		// http://www.cplusplus.com/reference/string/stol/
-		m_pCoeff.reserve(nPow);
+		m_pCoeff.resize(nPow);
 		fillWith0();
 		for (size_t i = 0; i < nPow; i++) {
 			m_pCoeff[i] = stol( str.substr(len - (i+1)*m_nExp, m_nExp) );
@@ -57,6 +60,7 @@ public:
 
 	BigInt(istream& sin, int nExp){
 		m_nExp = nExp;
+		m_nBase = pow(10, nExp);
 		readFromStream(sin);
 	}
 
@@ -71,7 +75,7 @@ public:
 			i--;
 		}
 		sout << m_pCoeff[i];
-		i--;	
+		i--;
 		for(; i >= 0 ; i--){
 			sout << setw(m_nExp) << setfill('0') << m_pCoeff[i];
 		}
@@ -90,7 +94,45 @@ public:
 	int& operator[] (size_t i) {
 		return m_pCoeff[i];
 	}
-
-
-
 };
+
+BigInt sumNaive(BigInt x1, BigInt x2) {
+	// TODO: check if x1 and x2 have equal exponents
+	size_t size1 = x1.size(), size2 = x2.size();
+	if (size2 > size1){
+		return sumNaive(x2, x1);
+	}
+
+	BigInt sum(x1.m_nExp, size1);
+
+	sum.m_pCoeff[0] = x1[0] + x2[0];
+
+
+
+	for (size_t i = 1; i < size2; i++){
+		sum[i] = x1[i] + x2[i];
+		if(sum[i - 1] > x1.m_nBase) {
+			sum[i - 1] -= x1.m_nBase;
+			sum[i]++;
+		}
+	}
+
+
+
+	for (size_t i = size2; i < size1; i++){
+		sum[i] = x1[i];
+		if(sum[i - 1] >= x1.m_nBase) {
+			sum[i - 1] -= x1.m_nBase;
+			sum[i]++;
+		}
+	}
+
+
+
+	if (sum[size1 - 1] >= x1.m_nBase){
+		sum.m_pCoeff.push_back(1);
+		sum[size1 - 1] -= x1.m_nBase;
+	}
+
+	return sum;
+}
