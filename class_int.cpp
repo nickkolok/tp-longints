@@ -145,7 +145,7 @@ BigInt sumNaive(BigInt x1, BigInt x2) {
 
 int compareAbs(BigInt a1, BigInt a2){
 	// Returns 0, if equal
-	// >0, if a is bigger than b
+	// >0, if a1 is bigger than a2
 	// <0 otherwise
 	a1.normalizeSize();
 	a2.normalizeSize();
