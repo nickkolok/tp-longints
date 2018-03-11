@@ -29,7 +29,7 @@ public:
 		}
 	}
 
-	BigInt(int nExp, int nPow) {
+	BigInt(int nExp, int nPow = 1) {
 		m_bSign = false; // +
 		m_nExp = nExp;
 		m_nBase = pow(10, nExp);
