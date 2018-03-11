@@ -40,14 +40,27 @@ int main(){
 	//b3.writeToStream(cout);
 
 /*
-	cout << b1.size() << " " << b2.size() << endl;
+//	cout << b1.size() << " " << b2.size() << endl;
 	cout << compareAbs(b1, b2) << endl;
 	cout << compareAbs(b2, b1) << endl;
+
+
+	BigInt b4 = subtractNaive(b1, b2);
+	b4.writeToStream(cout);
+	cout << endl;
+
 */
 
-	BigInt b3 = subtractNaive(b1, b2);
+	BigInt b3 = sumSigned(b1, b2);
+	//cout << b3.m_bSign << endl;
 	b3.writeToStream(cout);
 
+/*
+	cout << endl;
+	b1.m_pCoeff[0] = 0;
+	b1.m_pCoeff.resize(1);
+	b1.writeToStream(cout);
+*/
 
 	return 0;
 }
