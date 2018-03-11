@@ -203,3 +203,40 @@ BigInt subtractNaive(BigInt x1, BigInt x2) {
 
 	return sum;
 }
+
+BigInt sumSigned(BigInt x1, BigInt x2){
+	BigInt res(x1.m_nExp, max(x1.size(), x2.size()) + 1);
+	if(!x1.m_bSign && !x2.m_bSign) {
+		res = sumNaive(x1, x2);
+		res.m_bSign = false;
+		return res;
+	}
+	if(x1.m_bSign && x2.m_bSign) {
+		res = sumNaive(x1, x2);
+		res.m_bSign = true;
+		return res;
+	}
+	if(x1.m_bSign && !x2.m_bSign) {
+		return sumSigned(x2, x1);
+	}
+	// So, x1 is positive and x2 is negative
+	int cmp = compareAbs(x1, x2);
+	if(!cmp) {
+		res.m_pCoeff.resize(1);
+		res[0] = 0;
+		return res;
+	}
+	if(cmp < 0) {
+		// |x2| > |x1|
+		res = subtractNaive(x2, x1);
+		res.m_bSign = true;
+		return res;
+	}
+	// cmp > 0
+	res = subtractNaive(x1, x2);
+	res.m_bSign = false;
+	return res;
+
+
+
+}
