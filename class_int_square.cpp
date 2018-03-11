@@ -25,3 +25,20 @@ BigInt square(BigInt x){
 	}
 	return y;
 }
+
+
+BigInt multiply(BigInt x1, BigInt x2){
+	int size1 = x1.size(), size2 = x2.size();
+	BigInt y(x1.m_nExp, size1 + size2 + 1);
+	for (int i = 0; i < size1; i++) {
+		for (int j = 0; j < size2; j++) {
+			y[i + j    ] += x1[i] * x2[j];
+			y[i + j + 1] += y[i + j] / y.m_nBase;
+			y[i + j    ]  = y[i + j] % y.m_nBase;
+		}
+	}
+	y.m_bSign = x1.m_bSign ^ x2.m_bSign;
+	return y;
+}
+
+
