@@ -69,11 +69,17 @@ public:
 			sout << "-";
 		}
 		int i = size() - 1;
-		while (!m_pCoeff[i]) {
+		while (!m_pCoeff[i] && i) {
 			// Пропускаем ведущие нули.
 			// TODO: их вообще не должно быть
 			i--;
 		}
+		/*
+		if(i == -1){
+			sout << 0;
+			return;
+		}
+		*/
 		sout << m_pCoeff[i];
 		i--;
 		for(; i >= 0 ; i--){
