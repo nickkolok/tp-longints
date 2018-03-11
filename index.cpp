@@ -7,60 +7,31 @@ using namespace std;
 #include "class_int.cpp"
 
 int main(){
-//	cout << sizeof(int) << endl;
-//	cout << (atoi("123")-atoi("10")) << endl;
 
-/*
-	BigInt b(cin, 9);
-	//b.readFromStream(cin);
-	//cout << b[0] << endl;
-	//cout << b[1] << endl;
-	cout << b.size() << endl;
-	b.normalizeSize();
-	cout << b.size() << endl;
-	b.writeToStream(cout);
-	cout << endl;
-
-	BigInt b2(cin, 7);
-	//b.readFromStream(cin);
-	//cout << b2[0] << endl;
-	//cout << b2[1] << endl;
-	cout << b2.size() << endl;
-	b2.normalizeSize();
-	cout << b2.size() << endl;
-	b2.writeToStream(cout);
-	cout << endl;
-*/
-
-
+	cout << "Введите первый операнд:" << endl;
 	BigInt b1(cin, 9);
+	cout << "Введите второй операнд:" << endl;
 	BigInt b2(cin, 9);
+	cout << "Введите знак операции:  +  или  -" << endl;
+	char act;
+	cin >> act;
 
-	//BigInt b3 = sumNaive(b1, b2);
-	//b3.writeToStream(cout);
+	switch(act){
+		case '+':
+			// Nothing to do!
+		break;
+		case '-':
+			b2.m_bSign = !b2.m_bSign;
+		break;
+		default:
+			cout << "Некорректна операция" << endl;
+			return -2;
+	}
 
-/*
-//	cout << b1.size() << " " << b2.size() << endl;
-	cout << compareAbs(b1, b2) << endl;
-	cout << compareAbs(b2, b1) << endl;
-
-
-	BigInt b4 = subtractNaive(b1, b2);
-	b4.writeToStream(cout);
-	cout << endl;
-
-*/
 
 	BigInt b3 = sumSigned(b1, b2);
-	//cout << b3.m_bSign << endl;
 	b3.writeToStream(cout);
 
-/*
-	cout << endl;
-	b1.m_pCoeff[0] = 0;
-	b1.m_pCoeff.resize(1);
-	b1.writeToStream(cout);
-*/
 
 	return 0;
 }
