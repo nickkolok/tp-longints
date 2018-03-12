@@ -270,7 +270,9 @@ BigInt sumSigned(BigInt x1, BigInt x2){
 	res = subtractNaive(x1, x2);
 	res.m_bSign = false;
 	return res;
+}
 
-
-
+ostream& operator << (ostream& sout, BigInt&b) {
+	b.writeToStream(sout);
+	return sout;
 }
