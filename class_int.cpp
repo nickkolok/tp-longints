@@ -123,6 +123,17 @@ public:
 		}
 		return buf;
 	}
+
+	bool operator ! (){
+		int s = size() - 1;
+		while(s){
+			if(m_pCoeff[s]){
+				return false;
+			}
+			s--;
+		}
+		return !m_pCoeff[0];
+	}
 };
 
 BigInt sumNaive(BigInt x1, BigInt x2) {
