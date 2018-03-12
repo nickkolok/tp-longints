@@ -41,4 +41,21 @@ BigInt multiply(BigInt x1, BigInt x2){
 	return y;
 }
 
+BigInt raiseToPower(BigInt exp, BigInt pow){
+	BigInt multiplier = exp; // TODO: is exp destroyed?
+	BigInt restPow = pow; // TODO: is pow destroyed?
+	BigInt result(exp.m_nExp);
+	result[0] = 1;
+	while (!(!restPow)){
+		cout << "! " << restPow << endl;
+		if(restPow.divideByTwo()){
+			cout << result << "  " << multiplier << endl;
+			result = multiply(result, multiplier);
+			cout << result.size() << "   " << result << endl;
+		}
+		multiplier = square(multiplier);
+		cout << multiplier << endl;
+	}
+	return result;
+}
 

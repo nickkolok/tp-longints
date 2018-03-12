@@ -10,22 +10,15 @@ using namespace std;
 int main(){
 
 	cout << "Введите основание степени:" << endl;
-	BigInt b1(cin, 9);
+	BigInt b1(cin, 4);
 
-//	cout << "Введите показатель степени:" << endl;
-//	BigInt b2(cin, 5);
+	cout << "Введите показатель степени:" << endl;
+	BigInt b2(cin, 9);
 
-
-	b1.divideByTwo();
-//	b2.divideByTwo();
-	b1.writeToStream(cout);
-	cout << endl;
-//	b2.writeToStream(cout);
-
-/*	BigInt b3 = multiply(b1, b2);
-	cout << "Произведение" << endl;
+	BigInt b3 = raiseToPower(b1, b2);
+	cout << "Результат:" << endl;
 	b3.writeToStream(cout);
-*/
+
 
 	return 0;
 }
