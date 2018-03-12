@@ -100,6 +100,29 @@ public:
 	int& operator[] (size_t i) {
 		return m_pCoeff[i];
 	}
+
+	bool divideByTwo(){
+		int s = size();
+		//cout << s << endl;
+		int buf;
+		for(int i = s - 1; i > 0; i--){
+			buf = m_pCoeff[i] & 1;
+			//cout << "iteration " << i << " : "<< m_pCoeff[i]<< " " << buf;
+			m_pCoeff[i]>>=1;
+			//cout << m_pCoeff[i] << endl;
+			if(buf){
+				m_pCoeff[i-1]+=m_nBase;
+			}
+		}
+		buf = m_pCoeff[0] & 1;
+		//cout << "iteration 0 : "<< m_pCoeff[0]<< " " << buf;
+		m_pCoeff[0]>>=1;
+		//cout << m_pCoeff[0] << endl;
+		if(!m_pCoeff[s-1] && s-1){
+			m_pCoeff.pop_back();
+		}
+		return buf;
+	}
 };
 
 BigInt sumNaive(BigInt x1, BigInt x2) {
