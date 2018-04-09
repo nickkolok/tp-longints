@@ -24,7 +24,7 @@ int main(){
 			b2.m_bSign = !b2.m_bSign;
 		break;
 		default:
-			cout << "Некорректна операция" << endl;
+			cout << "Некорректная операция" << endl;
 			return -2;
 	}
 

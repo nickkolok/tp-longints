@@ -9,12 +9,10 @@ using namespace std;
 
 class BigInt {
 
-	// http://www.cplusplus.com/reference/vector/vector/reserve/
-
 public:
-	vector<int> m_pCoeff; // Массив коэффициентов
+	vector<int> m_pCoeff; // Массив коэффициентов ("цифр" в m_nBase'-чной системе)
 	int m_nExp; // степень числа 10
-	int m_nBase; // 10 в степени m_nExp
+	int m_nBase; // 10 в степени m_nExp, основание системы счисления
 	bool m_bSign; // знак числа
 
 
@@ -47,10 +45,9 @@ public:
 		} else if (str[0] == '+'){
 			str[0] = '0';
 		}
-		str = string(m_nExp + 1, '0') + str; // +1 это с запасом // TODO: а надо ли?
+		str = string(m_nExp + 1, '0') + str;
 		size_t len = str.length();
 		size_t nPow = len / m_nExp; // Эта длина уже учитывает "запасные" нули в начале строки, поэтому можно округлить до меньшего
-		// http://www.cplusplus.com/reference/string/stol/
 		m_pCoeff.resize(nPow);
 		fillWith0();
 		for (size_t i = 0; i < nPow; i++) {
@@ -74,12 +71,6 @@ public:
 			// TODO: их вообще не должно быть
 			i--;
 		}
-		/*
-		if(i == -1){
-			sout << 0;
-			return;
-		}
-		*/
 		sout << m_pCoeff[i];
 		i--;
 		for(; i >= 0 ; i--){
@@ -93,31 +84,22 @@ public:
 		}
 	}
 
-	~BigInt(){
-		//delete[] m_pCoeff;
-	}
-
 	int& operator[] (size_t i) {
 		return m_pCoeff[i];
 	}
 
 	bool divideByTwo(){
 		int s = size();
-		//cout << s << endl;
 		int buf;
 		for(int i = s - 1; i > 0; i--){
 			buf = m_pCoeff[i] & 1;
-			//cout << "iteration " << i << " : "<< m_pCoeff[i]<< " " << buf;
 			m_pCoeff[i]>>=1;
-			//cout << m_pCoeff[i] << endl;
 			if(buf){
 				m_pCoeff[i-1]+=m_nBase;
 			}
 		}
 		buf = m_pCoeff[0] & 1;
-		//cout << "iteration 0 : "<< m_pCoeff[0]<< " " << buf;
 		m_pCoeff[0]>>=1;
-		//cout << m_pCoeff[0] << endl;
 		if(!m_pCoeff[s-1] && s-1){
 			m_pCoeff.pop_back();
 		}
@@ -147,8 +129,6 @@ BigInt sumNaive(BigInt x1, BigInt x2) {
 
 	sum.m_pCoeff[0] = x1[0] + x2[0];
 
-
-
 	for (size_t i = 1; i < size2; i++){
 		sum[i] = x1[i] + x2[i];
 		if(sum[i - 1] >= x1.m_nBase) {
@@ -157,8 +137,6 @@ BigInt sumNaive(BigInt x1, BigInt x2) {
 		}
 	}
 
-
-
 	for (size_t i = size2; i < size1; i++){
 		sum[i] = x1[i];
 		if(sum[i - 1] >= x1.m_nBase) {
@@ -166,7 +144,6 @@ BigInt sumNaive(BigInt x1, BigInt x2) {
 			sum[i]++;
 		}
 	}
-
 
 
 	if (sum[size1 - 1] >= x1.m_nBase){
@@ -216,8 +193,6 @@ BigInt subtractNaive(BigInt x1, BigInt x2) {
 	BigInt sum(x1.m_nExp, size1);
 
 	sum.m_pCoeff[0] = x1[0] - x2[0];
-
-
 
 	for (size_t i = 1; i < size2; i++){
 		sum[i] = x1[i] - x2[i];
