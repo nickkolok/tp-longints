@@ -1,0 +1,19 @@
+% Пакет для отображения исходного кода - с http://www.inp.nsk.su/~baldin/LaTeX/lurs-code.pdf
+\usepackage{listings}
+%\usepackage{listingsutf8}
+% подгружаемые языки — подробнее в документации listings
+\lstloadlanguages{C++}
+% Конфигурируем
+\lstset{
+	language=C++, % выбираем язык по умолчанию
+	frame=single, % рамка
+	commentstyle=\itshape\textcolor[rgb]{0.5,0.5,0.5}, % шрифт для комментариев
+	stringstyle=\bfseries, % шрифт для строк
+	numbers=left,              % где поставить нумерацию строк (слева\справа)
+	numberstyle=\tiny,         % размер шрифта для номеров строк
+	tabsize=2,                 % размер табуляции по умолчанию равен 2 пробелам
+}
+
+% А эта тёмная магия позволяет нормально работать с кириллицей в листингах
+\input{lib/listingcyr.tex}
+
