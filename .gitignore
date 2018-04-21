@@ -1,5 +1,9 @@
 *--*.fodg
 *.o
+*.fodg#
+
+
+nohup.out
 
 index
 multiply
