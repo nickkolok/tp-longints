@@ -12,13 +12,12 @@ BigInt square(BigInt x){
 	BigInt y(x.m_nExp, 2*size + 1);
 	for (int i = 0; i < size; i++){
 		y[2*i    ] = x[i]   * x[i];
-		// TODO: which is faster: % / or while -- ?
 		y[2*i + 1] = y[2*i] / y.m_nBase;
 		y[2*i    ] = y[2*i] % y.m_nBase;
 	}
 	for (int i = 0; i < size; i++) {
 		for (int j = i + 1; j < size; j++) {
-			y[i + j    ] += 2 * x[i] * x[j];
+			y[i + j    ] += (x[i] * x[j]) << 1;
 			y[i + j + 1] += y[i + j] / y.m_nBase;
 			y[i + j    ]  = y[i + j] % y.m_nBase;
 		}
@@ -42,8 +41,8 @@ BigInt multiply(BigInt x1, BigInt x2){
 }
 
 BigInt raiseToPower(BigInt exp, BigInt pow){
-	BigInt multiplier = exp; // TODO: is exp destroyed?
-	BigInt restPow = pow; // TODO: is pow destroyed?
+	BigInt multiplier = exp;
+	BigInt restPow = pow;
 	BigInt result(exp.m_nExp);
 	result[0] = 1;
 	while (!(!restPow)){
