@@ -1,5 +1,5 @@
 // Usage:
-// nodejs genegate.js filename.cpp 128 256
+// nodejs generate.js filename.cpp 128 256
 // 128 - line to start with
 // 256 - line to end at
 
