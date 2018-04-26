@@ -116,6 +116,10 @@ public:
 		}
 		return !m_pCoeff[0];
 	}
+
+	operator int*(){
+		return m_pCoeff.data();
+	}
 };
 
 BigInt sumNaive(BigInt x1, BigInt x2) {
@@ -183,6 +187,26 @@ int compareAbs(BigInt a1, BigInt a2){
 }
 
 
+void subtractNaivePointers(int* sum, int* x1, int* x2, size_t size1, size_t size2, int base){
+	sum[0] = x1[0] - x2[0];
+
+	for (size_t i = 1; i < size2; i++){
+		sum[i] = x1[i] - x2[i];
+		if(sum[i - 1] < 0) {
+			sum[i - 1] += base;
+			sum[i]--;
+		}
+	}
+
+	for (size_t i = size2; i < size1; i++){
+		sum[i] = x1[i];
+		if(sum[i - 1] < 0) {
+			sum[i - 1] += base;
+			sum[i]--;
+		}
+	}
+}
+
 BigInt subtractNaive(BigInt x1, BigInt x2) {
 	// TODO: check if x1 and x2 have equal exponents
 
@@ -192,24 +216,7 @@ BigInt subtractNaive(BigInt x1, BigInt x2) {
 
 	BigInt sum(x1.m_nExp, size1);
 
-	sum.m_pCoeff[0] = x1[0] - x2[0];
-
-	for (size_t i = 1; i < size2; i++){
-		sum[i] = x1[i] - x2[i];
-		if(sum[i - 1] < 0) {
-			sum[i - 1] += x1.m_nBase;
-			sum[i]--;
-		}
-	}
-
-	for (size_t i = size2; i < size1; i++){
-		sum[i] = x1[i];
-		if(sum[i - 1] < 0) {
-			sum[i - 1] += x1.m_nBase;
-			sum[i]--;
-		}
-	}
-
+	subtractNaivePointers(sum, x1, x2, size1, size2, x1.m_nBase);
 	return sum;
 }
 
