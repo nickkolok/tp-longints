@@ -36,15 +36,9 @@ int normGlukhov(BigInt& x, BigInt& y) {
 			scaler[0] = scaling;
 			ynew = multiply(y, scaler);
 			ynew.normalizeSize();
-			//cout << "Multiplier  "  << scaling << "  turns" << endl << y << endl << "into" << endl << ynew << endl;
-			//cout << ynew.size() << "  " << ynew[ynew.size() - 1] << endl;
 		} while (ynew[ynew.size() - 1] <= base / 2 );
-		cout << "Scaling by " << scaling << endl;
-		cout << x << " and " << y << endl;
 		x = multiply(x, scaler);
 		y = ynew;
-		cout << "became" << endl;
-		cout << x << " and " << y << endl;
 		return scaling;
 	}
 	return 1;
@@ -73,17 +67,12 @@ BigInt divide(BigInt x, BigInt y, BigInt* r){
 		return one;
 	}
 
-	clog << "Starting norm-n..." << endl;
 	// Now we know the following:
 	// 1) y > x
 	// 2) y has at least two digits
 	// 3) Thus, x has at least two digits
 
 	size_t scaling = normGlukhov(x, y);
-	clog << "Finished norm-n..." << endl;
-	clog << "Scaling by " << scaling << endl;
-	clog << x << " and " << y << endl;
-
 	x.m_pCoeff.push_back(0);
 	y.m_pCoeff.push_back(0);
 
@@ -97,10 +86,8 @@ BigInt divide(BigInt x, BigInt y, BigInt* r){
 	int base = y.m_nBase;
 
 	BigInt ytest(x.m_nExp);
-	clog << "Starting main loop..." << endl;
 
 	for (int shift = sizeResult - 1; shift >= 0; shift--){
-		clog << "shift = " << shift << endl;
 		if (compareAbsPointers(p_y, p_x + shift, ys) > 0){
 			result[shift] = 0;
 			continue;
@@ -114,14 +101,6 @@ BigInt divide(BigInt x, BigInt y, BigInt* r){
 		ytest = multiply(y, q - 2);
 		result[shift] = q - 2;
 		subtractNaivePointers(p_x + shift, p_x + shift, ytest, ys, ys, base);
-
-		/*
-		while (compareAbsPointers(p_y, p_x + shift, ys) <= 0){
-			clog << shift << endl;
-			result[shift]++;
-			subtractNaivePointers(p_x + shift, p_x + shift, p_y, ys, ys, base);
-		}
-		*/
 
 		if (compareAbsPointers(p_y, p_x + shift, ys) <= 0){
 			result[shift]++;

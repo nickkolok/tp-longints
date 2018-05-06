@@ -51,14 +51,10 @@ BigInt raiseToPower(BigInt exp, BigInt pow){
 	BigInt result(exp.m_nExp);
 	result[0] = 1;
 	while (!(!restPow)){
-		cout << "! " << restPow << endl;
 		if(restPow.divideByTwo()){
-			cout << result << "  " << multiplier << endl;
 			result = multiply(result, multiplier);
-			cout << result.size() << "   " << result << endl;
 		}
 		multiplier = square(multiplier);
-		cout << multiplier << endl;
 	}
 	return result;
 }
