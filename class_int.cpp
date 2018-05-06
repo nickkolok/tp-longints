@@ -159,6 +159,20 @@ BigInt sumNaive(BigInt x1, BigInt x2) {
 	return sum;
 }
 
+int compareAbsPointers(int* a1, int* a2, size_t size){
+	//sizes of arrays are equal
+	for (int i = size - 1; i>=0; i--){
+		if (a1[i] > a2[i]) {
+			return i + 1;
+		}
+		if (a1[i] < a2[i]) {
+			return - i - 1;
+		}
+	}
+	return 0;
+}
+
+
 int compareAbs(BigInt a1, BigInt a2){
 	// Returns 0, if equal
 	// >0, if a1 is bigger than a2
@@ -174,17 +188,8 @@ int compareAbs(BigInt a1, BigInt a2){
 	if( size2 > size1){
 		return -size2;
 	}
+	return compareAbsPointers(a1, a2, size1);
 
-	//sizes of arrays are equal
-	for (int i = size1 - 1; i>=0; i--){
-		if (a1[i] > a2[i]) {
-			return i + 1;
-		}
-		if (a1[i] < a2[i]) {
-			return - i - 1;
-		}
-	}
-	return 0;
 }
 
 
