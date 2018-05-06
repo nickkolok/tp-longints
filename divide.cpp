@@ -14,7 +14,9 @@ int main(){
 
 	BigInt r(4);
 	BigInt b3 = divide(b1, b2, &r);
+	cout << "Частное:" << endl;
 	cout << b3 << endl;
+	cout << "Остаток:" << endl;
 	cout << r << endl;
 
 	return 0;
