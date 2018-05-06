@@ -1,0 +1,125 @@
+\documentclass[a4paper,12pt]{article} %размер бумаги устанавливаем А4, шрифт 12пунктов
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel} %используем русский и английский языки с переносами
+\usepackage{amssymb,amsfonts,amsmath,mathtext,enumerate,float,amsthm} %подключаем нужные пакеты расширений
+\usepackage[unicode,colorlinks=true,citecolor=black,linkcolor=black]{hyperref}
+%\usepackage[pdftex,unicode,colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+\usepackage[dvips]{graphicx} %хотим вставлять рисунки?
+\graphicspath{{illustr/}}%путь к рисункам
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.} % Заменяем библиографию с квадратных скобок на точку:
+\makeatother %Смысл этих трёх строчек мне непонятен, но поверим "Запискам дебианщика"
+
+\usepackage{geometry} % Меняем поля страницы.
+\geometry{left=2cm}% левое поле
+\geometry{right=1cm}% правое поле
+\geometry{top=2cm}% верхнее поле
+\geometry{bottom=2cm}% нижнее поле
+
+\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления на цифра.цифра
+
+\sloppy
+
+
+%\renewcommand\normalsize{\fontsize{14}{25.2pt}\selectfont}
+
+\usepackage[backend=biber,style=gost-numeric,sorting=none]{biblatex}
+\addbibresource{all.bib}
+
+\input{lib/listingoptions}
+
+
+\begin{document}
+
+\setcounter{page}{2}
+
+\section*{Предварительные сведения}
+
+В качестве основного пособия по языку C++ используется \cite{chmyhalo}.
+
+
+Блок-схемы выполняются в соответствии с \cite{gost-block-scheme};
+ряд примеров имеется в \cite{wiki-block-scheme}.
+
+
+\section*{Постановка задачи}
+Составить алгоритм и написать программу
+для возведения длинного целого числа в длинную натуральную степень.
+
+Составить алгоритм и написать программу
+для деления двух дилнных целых чисел с остатком.
+
+\section*{Организация работы с длинными числами}
+
+Возведение в степень выполняется не циклическим умножением,
+а чередующимися умножением и возведением в квадрат \cite{Glukhov}.
+Так как основание степени подвергается мультипликативным операциям,
+то оно записывается в $10^4$--чной системе счисления.
+С показателем степени ситуация несколько иная:
+деление на 2 с остатком, вообще говоря,
+не обязательно проводить в той же системе счисления, в которой записано основание;
+из соображений экономии выбрана $10^9$--чная система,
+поскльку максимальное число, получаемое в результате сноса разряда,
+в таком случае не превышает $2\cdot 10^9 - 1$,
+что укладывается в ограничения 32-битных целых.
+
+Деление выполняется по алгоритму, предложенному Глуховым \cite{Glukhov};
+делитель и делимое должны быть записаны в одинаковой системе счисления;
+поскольку делимое подвергается мультипликативным операциям,
+то и для делимого, и для делителя используется $10^4$--чная система счисления.
+
+Во всех случаях числа считаются положительными,
+поскольку учёт знака не представляет алгоритмического интереса.
+
+\section*{Исходный код программы}
+
+\lstinputlisting[label=BigIntClass,caption={class\_int.cpp}]{../class_int.cpp}
+\lstinputlisting[label=BigIntClass,caption={class\_int\_square.cpp}]{../class_int_square.cpp}
+\lstinputlisting[label=BigIntClass,caption={class\_int\_division.cpp}]{../class_int_division.cpp}
+\lstinputlisting[label=Summing,caption={divide.cpp}]{../divide.cpp}
+\lstinputlisting[label=Summing,caption={raise\_to\_power.cpp}]{../raise_to_power.cpp}
+
+\section*{Блок-схемы}
+
+Блок-схемы приводятcя только для подалгоритмов, представляющих интерес с точки зрения реализации работы с длинными числами,
+а именно нормализации по Глухову, деления с остатком по Глухову,
+деления с остатком на 2, возведения в степень.
+Алгоритмически тривиальные конструкции --- наподобие перегрузки операторов потока или индекса --- на блок-схемах не отражаются,
+дабы избежать загромождения отчёта.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.67\textwidth]{lr2_square.pdf}
+	\caption{Блок-схема алгоритма возведения длинного числа в квадрат: функция square(BigInt x)}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr2_multiply.pdf}
+	\caption{Блок-схема алгоритма умножения длинных чисел: функция multiply(BigInt x1, BigInt x2)}
+\end{figure}
+
+
+\clearpage
+
+\section*{Результаты работы программы}
+
+
+
+\subsection*{Возведение в квадрат}
+\begin{verbatim}
+
+(program exited with code: 0)
+Press return to continue
+\end{verbatim}
+
+
+\printbibliography
+\end{document}
