@@ -7,7 +7,7 @@ using namespace std;
 
 #include "class_int_square.cpp"
 
-BigInt divideByDigit(BigInt x, int d){
+BigInt divideByDigit(BigInt x, int d, BigInt* r = 0){
 	int s = x.size();
 	BigInt y(x.m_nExp, s);
 
@@ -18,5 +18,8 @@ BigInt divideByDigit(BigInt x, int d){
 	y[0]  =  x[0] / d;
 
 	y.m_bSign = x.m_bSign;
+	if (r) {
+		*r = BigInt(x.m_nExp, 1, x[0] % d);
+	}
 	return y;
 }
