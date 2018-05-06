@@ -9,12 +9,13 @@ int main(){
 	cout << "Введите делимое" << endl;
 	BigInt b1(cin, 4);
 
-	int d;
 	cout << "Введите делитель" << endl;
-	cin >> d;
+	BigInt b2(cin, 4);
 
-	BigInt b3 = divideByDigit(b1, d);
+	BigInt r(4);
+	BigInt b3 = divide(b1, b2, &r);
 	cout << b3 << endl;
+	cout << r << endl;
 
 	return 0;
 }
