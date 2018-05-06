@@ -17,7 +17,7 @@ int main(){
 
 	BigInt b3 = raiseToPower(b1, b2);
 	cout << "Результат:" << endl;
-	b3.writeToStream(cout);
+	cout << b3 << endl;
 
 
 	return 0;
