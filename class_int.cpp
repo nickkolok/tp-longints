@@ -27,12 +27,13 @@ public:
 		}
 	}
 
-	BigInt(int nExp, int nPow = 1) {
+	BigInt(int nExp, int nPow = 1, int lastdigit = 0) {
 		m_bSign = false; // +
 		m_nExp = nExp;
 		m_nBase = pow(10, nExp);
 		m_pCoeff.resize(nPow);
 		fillWith0();
+		m_pCoeff[0] = lastdigit;
 	}
 
 	void readFromStream(istream& sin){
