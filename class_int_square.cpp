@@ -40,6 +40,11 @@ BigInt multiply(BigInt x1, BigInt x2){
 	return y;
 }
 
+BigInt multiply(BigInt x1, int x2){
+	return multiply(x1, BigInt(x1.m_nExp, 1, x2));
+}
+
+
 BigInt raiseToPower(BigInt exp, BigInt pow){
 	BigInt multiplier = exp;
 	BigInt restPow = pow;
