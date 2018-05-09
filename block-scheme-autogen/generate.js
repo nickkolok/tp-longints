@@ -64,6 +64,9 @@ for(var i = 0; i < rows.length; i++){
 	if(row.match(/^\/\//)){
 		continue;
 	}
+	if(row.match(/^\s*do\s*{\s*$/)){
+		continue;
+	}
 	if(row.match(/^[\{\}]\s*$/)){
 		continue;
 	}
