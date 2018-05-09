@@ -129,7 +129,20 @@ for(var i = 0; i < rows.length; i++){
 		currentHeight += sizeB + interval;
 
 		generatedText +=
-			generateConnector('id'+(currentId-1), 'id'+(currentId+1), 'нет', 1)+'\n\n';
+			generateConnector('id'+currentId, 'id'+(currentId+1))+'\n\n';
+
+		currentId++;
+		generatedText +=
+			'	<draw:custom-shape  xml:id="id'+currentId+'" draw:id="id'+currentId+'" draw:style-name="gr1" draw:text-style-name="P2" draw:layer="layout" svg:width="'+sizeA+'cm" svg:height="'+(sizeB/2)+'cm" svg:x="'+(tabdepth*(intervalH+sizeA))+'cm" svg:y="'+currentHeight+'cm">'+
+			'		<text:p text:style-name="P1"> Конец </text:p>'+
+			'		<draw:enhanced-geometry svg:viewBox="0 0 21600 21600" draw:glue-points="10800 0 0 10800 10800 21600 21600 10800" draw:text-areas="1060 3180 20540 18420" draw:type="flowchart-terminator" draw:enhanced-path="M 3470 21600 X 0 10800 3470 0 L 18130 0 X 21600 10800 18130 21600 Z N"/>'+
+			'	</draw:custom-shape>';
+
+
+		currentHeight += sizeB + interval;
+
+		generatedText +=
+			generateConnector('id'+(currentId-2), 'id'+(currentId+1), 'нет', 1)+'\n\n';
 
 		continue;
 	}
