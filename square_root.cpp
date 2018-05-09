@@ -17,5 +17,11 @@ int main(){
 	cout << "Кубический корень:" << endl;
 	cout << b4 << endl;
 
+	cout << "************" << endl;
+	cout << "Квадратный корень:" << endl;
+	cout << b3 << endl;
+	cout << "Кубический корень:" << endl;
+	cout << b4 << endl;
+
 	return 0;
 }
