@@ -112,8 +112,6 @@ BigInt divide(BigInt x, BigInt y, BigInt* r = 0){
 
 	}
 
-	clog << "Finished main loop!" << endl;
-
 	if(r) {
 		if (scaling != 1) {
 			*r = divideByDigit(x, scaling);
