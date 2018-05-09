@@ -29,15 +29,13 @@ int normGlukhov(BigInt& x, BigInt& y) {
 	size_t base = y.m_nBase;
 	if (firstDigit <= base/2) {
 		size_t scaling = base/2 / (firstDigit+1) - 1;
-		BigInt scaler(y.m_nExp);
 		BigInt ynew(y.m_nExp);
 		do{
 			scaling++;
-			scaler[0] = scaling;
-			ynew = multiply(y, scaler);
+			ynew = multiply(y, scaling);
 			ynew.normalizeSize();
 		} while (ynew[ynew.size() - 1] <= base / 2 );
-		x = multiply(x, scaler);
+		x = multiply(x, scaling);
 		y = ynew;
 		return scaling;
 	}
