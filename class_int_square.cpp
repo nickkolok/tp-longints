@@ -59,3 +59,6 @@ BigInt raiseToPower(BigInt exp, BigInt pow){
 	return result;
 }
 
+BigInt raiseToPower(BigInt exp, int pow){
+	return raiseToPower(exp, BigInt(9, 1, pow));
+}
