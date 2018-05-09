@@ -53,8 +53,10 @@ BigInt raiseToPower(BigInt exp, BigInt pow){
 	while (!(!restPow)){
 		if(restPow.divideByTwo()){
 			result = multiply(result, multiplier);
+			result.normalizeSize();
 		}
 		multiplier = square(multiplier);
+		multiplier.normalizeSize();
 	}
 	return result;
 }
