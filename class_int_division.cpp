@@ -44,7 +44,8 @@ int normGlukhov(BigInt& x, BigInt& y) {
 
 
 
-BigInt divide(BigInt x, BigInt y, BigInt* r){
+BigInt divide(BigInt x, BigInt y, BigInt* r = 0){
+	x.normalizeSize();
 	y.normalizeSize();
 
 	if (y.size() == 1){
@@ -55,14 +56,14 @@ BigInt divide(BigInt x, BigInt y, BigInt* r){
 
 	int cmp = compareAbs(x, y);
 	if (cmp < 0) {
-		*r = x;
+		if(r){
+			*r = x;
+		}
 		return result;
 	}
 	if (cmp == 0) {
 		*r = result;
-		BigInt one(x.m_nExp);
-		one[0] = 1;
-		return one;
+		return BigInt(x.m_nExp, 1, 1);
 	}
 
 	// Now we know the following:
@@ -94,7 +95,7 @@ BigInt divide(BigInt x, BigInt y, BigInt* r){
 		if (x[ys-1 + shift] == firstDigit) {
 			q = base - 1;
 		} else {
-			q = (x[ys - 1 + shift]*base + x[ys - 2 + shift]) / firstDigit;
+			q = max((x[ys - 1 + shift]*base + x[ys - 2 + shift]) / firstDigit, 2);
 		}
 		ytest = multiply(y, q - 2);
 		result[shift] = q - 2;
