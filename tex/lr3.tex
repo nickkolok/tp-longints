@@ -55,7 +55,7 @@
 для возведения длинного целого числа в длинную натуральную степень.
 
 Составить алгоритм и написать программу
-для деления двух дилнных целых чисел с остатком.
+для деления двух длинных целых чисел с остатком.
 
 \section*{Организация работы с длинными числами}
 
@@ -71,21 +71,32 @@
 в таком случае не превышает $2\cdot 10^9 - 1$,
 что укладывается в ограничения 32-битных целых.
 
+Деление на 2 в целях экономии времени реализуется <<на месте>>,
+т.е. частное пишется на место делимого, остаток возвращается.
+
 Деление выполняется по алгоритму, предложенному Глуховым \cite{Glukhov};
 делитель и делимое должны быть записаны в одинаковой системе счисления;
 поскольку делимое подвергается мультипликативным операциям,
 то и для делимого, и для делителя используется $10^4$--чная система счисления.
 
-Во всех случаях числа считаются положительными,
+При делении числа считаются положительными,
 поскольку учёт знака не представляет алгоритмического интереса.
+
+Имевшиеся функции сравнения и вычитания разделены на две части:
+первая часть каждой функции, сохранившая название,
+используется для работы с объектами класса BigInt
+и принимает только два аргумента
+(вся сопутствующая информация: основание системы счисления, длина числа~--- инкапсулированы).
+Вторая же часть работает с указателями и, кроме них, принимает все необходимые параметры.
+
 
 \section*{Исходный код программы}
 
-\lstinputlisting[label=BigIntClass,caption={class\_int.cpp}]{../class_int.cpp}
-\lstinputlisting[label=BigIntClass,caption={class\_int\_square.cpp}]{../class_int_square.cpp}
+\lstinputlisting[caption={class\_int.cpp}]{../class_int.cpp}
+\lstinputlisting[caption={class\_int\_square.cpp}]{../class_int_square.cpp}
 \lstinputlisting[label=BigIntClass,caption={class\_int\_division.cpp}]{../class_int_division.cpp}
 \lstinputlisting[label=Summing,caption={divide.cpp}]{../divide.cpp}
-\lstinputlisting[label=Summing,caption={raise\_to\_power.cpp}]{../raise_to_power.cpp}
+\lstinputlisting[caption={raise\_to\_power.cpp}]{../raise_to_power.cpp}
 
 \section*{Блок-схемы}
 
@@ -97,13 +108,36 @@
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.67\textwidth]{lr2_square.pdf}
-	\caption{Блок-схема алгоритма возведения длинного числа в квадрат: функция square(BigInt x)}
+	\includegraphics[width=\textwidth]{lr3_raiseToPower.pdf}
+	\caption{Блок-схема алгоритма возведения длинного числа exp в степень pow: функция BigInt raiseToPower(BigInt exp, BigInt pow)}
 \end{figure}
 
 \begin{figure}[ht]
-	\includegraphics[width=\textwidth]{lr2_multiply.pdf}
-	\caption{Блок-схема алгоритма умножения длинных чисел: функция multiply(BigInt x1, BigInt x2)}
+	\includegraphics[width=\textwidth]{lr3_divideByTwo.pdf}
+	\caption{Блок-схема алгоритма деления на 2 <<на месте>>: функция-член bool divideByTwo()}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr3_normGlukhov.pdf}
+	\caption{Блок-схема алгоритма нормализации по Глухову <<на месте>>: функция int normGlukhov(BigInt\& x, BigInt\& y)}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr3_divideByDigit.pdf}
+	\caption{Блок-схема алгоритма деления на цифру: функция BigInt divideByDigit(BigInt x, int d, BigInt* r = 0)}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr3_divide-1.pdf}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr3_divide-2.pdf}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr3_divide-3.pdf}
+	\caption{Блок-схема алгоритма деления по Глухову: функция BigInt divide(BigInt x, BigInt y, BigInt* r)}
 \end{figure}
 
 
@@ -113,9 +147,74 @@
 
 
 
-\subsection*{Возведение в квадрат}
+\subsection*{Возведение в степень (запуск 1)}
+\begin{verbatim}
+Введите основание степени:
+-200000000000
+Введите показатель степени:
+19
+Результат:
+-5242880000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000
+
+
+------------------
+(program exited with code: 0)
+Press return to continue
+\end{verbatim}
+
+\subsection*{Возведение в степень (запуск 2)}
+\begin{verbatim}
+Введите основание степени:
+-2
+Введите показатель степени:
+1000
+Результат:
+10715086071862673209484250490600018105614048117055336074437503883703510511249361
+22493198378815695858127594672917553146825187145285692314043598457757469857480393
+45677748242309854210746050623711418779541821530464749835819412673987675591655439
+46077062914571196477686542167660429831652624386837205668069376
+
+
+------------------
+(program exited with code: 0)
+Press return to continue
+\end{verbatim}
+
+\subsection*{Возведение в степень (запуск 3)}
 \begin{verbatim}
 
+Введите основание степени:
+-1
+Введите показатель степени:
+1000000000000000
+Результат:
+1
+
+
+------------------
+(program exited with code: 0)
+Press return to continue
+\end{verbatim}
+
+Удалось добиться вычисления $2^{100000}$,
+но вывод программы не приводится, т.к. в этом числе очень много знаков.
+
+
+\subsection*{Деление с остатком}
+\begin{verbatim}
+Введите делимое
+1000000000000000000000000
+Введите делитель
+3333333333
+Частное:
+300000000030000
+Остаток:
+10000
+
+
+------------------
 (program exited with code: 0)
 Press return to continue
 \end{verbatim}
