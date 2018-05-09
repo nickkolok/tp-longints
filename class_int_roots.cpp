@@ -50,7 +50,7 @@ BigInt squareRoot(BigInt x){
 	return previousIteration;
 }
 
-BigInt mthRootIteration(BigInt origin, BigInt currentApproximation, int m){
+BigInt mthRootIteration(BigInt origin,BigInt currentApproximation,int m){
 	BigInt raised = raiseToPower(
 						currentApproximation,
 						m-1

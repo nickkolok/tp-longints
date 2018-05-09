@@ -95,7 +95,7 @@ BigInt divide(BigInt x, BigInt y, BigInt* r = 0){
 		if (x[ys-1 + shift] == firstDigit) {
 			q = base - 1;
 		} else {
-			q = max((x[ys - 1 + shift]*base + x[ys - 2 + shift]) / firstDigit, 2);
+			q = max((x[ys-1 + shift]*base + x[ys-2 + shift]) / firstDigit,2);
 		}
 		ytest = multiply(y, q - 2);
 		result[shift] = q - 2;
@@ -106,7 +106,7 @@ BigInt divide(BigInt x, BigInt y, BigInt* r = 0){
 			subtractNaivePointers(p_x + shift, p_x + shift, p_y, ys, ys, base);
 			if (compareAbsPointers(p_y, p_x + shift, ys) <= 0){
 				result[shift]++;
-				subtractNaivePointers(p_x + shift, p_x + shift, p_y, ys, ys, base);
+				subtractNaivePointers(p_x+shift, p_x+shift, p_y, ys, ys, base);
 			}
 		}
 
