@@ -55,7 +55,6 @@ BigInt mthRootIteration(BigInt origin, BigInt currentApproximation, int m){
 						currentApproximation,
 						m-1
 					);
-	clog << "Raised to power " << (m-1) << " :  " << raised << endl;
 
 	BigInt quotient =
 			divide(
@@ -65,8 +64,6 @@ BigInt mthRootIteration(BigInt origin, BigInt currentApproximation, int m){
 					m-1
 				)
 			);
-
-	clog << quotient << endl;
 
 	return divideByDigit(multiply(
 		sumSigned(
@@ -78,7 +75,6 @@ BigInt mthRootIteration(BigInt origin, BigInt currentApproximation, int m){
 
 BigInt mthRoot(BigInt x, int m){
 	x.normalizeSize();
-	clog << "Counting " << m << "th root from " << x << endl;
 	BigInt previousIteration = x;
 	BigInt currentIteration = x;
 	do {
