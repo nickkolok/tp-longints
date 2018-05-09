@@ -18,6 +18,7 @@ function prepareRow(row){
 	return row
 		.replace(/\!/g, ' НЕ ')
 		.replace(/&&/g, ' И ')
+		.replace(/&/g, ' &amp; ')
 		.replace(/>/g, ' &gt; ')
 		.replace(/</g, ' &lt; ')
 }
