@@ -67,7 +67,7 @@ for(var i = 0; i < rows.length; i++){
 	if(row.match(/^[\{\}]\s*$/)){
 		continue;
 	}
-	if(row.match(/[csf]out/)){
+	if(row.match(/([csf]out)|(clog)|(cerr)/)){
 		currentId++;
 		generatedText +=
 			'   <draw:custom-shape  xml:id="id'+currentId+'" draw:id="id'+currentId+'" draw:style-name="gr1" draw:text-style-name="P2" draw:layer="layout" svg:width="'+sizeA+'cm" svg:height="'+sizeB+'cm" svg:x="'+(tabdepth*(intervalH+sizeA))+'cm" svg:y="'+currentHeight+'cm">'+
