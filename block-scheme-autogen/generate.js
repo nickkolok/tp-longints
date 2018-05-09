@@ -31,7 +31,7 @@ function generateConnector(id1,id2, text, gluepointFrom){
 }
 
 var currentPosition = 0;
-var sizeA = 7, sizeB = 3, interval = 2, intervalH = 1; //cm
+var sizeA = 10, sizeB = 3, interval = 2, intervalH = 1; //cm
 var tabshift = 1;
 var currentId = 0;
 var currentHeight = 0;
