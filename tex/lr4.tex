@@ -1,0 +1,108 @@
+\documentclass[a4paper,12pt]{article} %размер бумаги устанавливаем А4, шрифт 12пунктов
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel} %используем русский и английский языки с переносами
+\usepackage{amssymb,amsfonts,amsmath,mathtext,enumerate,float,amsthm} %подключаем нужные пакеты расширений
+\usepackage[unicode,colorlinks=true,citecolor=black,linkcolor=black]{hyperref}
+%\usepackage[pdftex,unicode,colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+\usepackage[dvips]{graphicx} %хотим вставлять рисунки?
+\graphicspath{{illustr/}}%путь к рисункам
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.} % Заменяем библиографию с квадратных скобок на точку:
+\makeatother %Смысл этих трёх строчек мне непонятен, но поверим "Запискам дебианщика"
+
+\usepackage{geometry} % Меняем поля страницы.
+\geometry{left=2cm}% левое поле
+\geometry{right=1cm}% правое поле
+\geometry{top=2cm}% верхнее поле
+\geometry{bottom=2cm}% нижнее поле
+
+\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления на цифра.цифра
+
+\sloppy
+
+
+%\renewcommand\normalsize{\fontsize{14}{25.2pt}\selectfont}
+
+\usepackage[backend=biber,style=gost-numeric,sorting=none]{biblatex}
+\addbibresource{all.bib}
+
+\input{lib/listingoptions}
+
+
+\begin{document}
+
+\setcounter{page}{2}
+
+\section*{Предварительные сведения}
+
+В качестве основного пособия по языку C++ используется \cite{chmyhalo}.
+
+
+Блок-схемы выполняются в соответствии с \cite{gost-block-scheme};
+ряд примеров имеется в \cite{wiki-block-scheme}.
+
+
+\section*{Постановка задачи}
+Составить алгоритм и написать программу
+для отыскания наибольшего общего делителя двух длинных целых чисел
+и его линейного представления.
+
+
+\section*{Выбор алгоритма}
+
+Алгоритм LSBGCD, описаныый в \cite{Glukhov},
+не представляется оптимальным для работы с длинными числами,
+записанными в недвоичной системе счисления:
+требуется либо <<дорогая>> операция умножения на $2^n$,
+либо многократное вычитание, если обобщить этот алгоритм,
+используя вместо 2 основание текущей системы счисления.
+
+Из альтернатив наиболее целесообразным представляется применение
+<<расширенного бинарного алгоритма Евклида>> \cite{gcd-binary}.
+
+
+\section*{Организация работы с длинными числами}
+
+
+\section*{Исходный код программы}
+
+\lstinputlisting[caption={class\_int.cpp}]{../class_int.cpp}
+\lstinputlisting[caption={class\_int\_square.cpp}]{../class_int_square.cpp}
+\lstinputlisting[label=BigIntClass,caption={class\_int\_division.cpp}]{../class_int_division.cpp}
+\lstinputlisting[label=Summing,caption={divide.cpp}]{../divide.cpp}
+\lstinputlisting[caption={raise\_to\_power.cpp}]{../raise_to_power.cpp}
+
+\section*{Блок-схемы}
+
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr3_divide-3.pdf}
+	\caption{Блок-схема алгоритма деления по Глухову: функция BigInt divide(BigInt x, BigInt y, BigInt* r)}
+\end{figure}
+
+
+\clearpage
+
+\section*{Результаты работы программы}
+
+
+
+\subsection*{Возведение в степень (запуск 1)}
+\begin{verbatim}
+
+------------------
+(program exited with code: 0)
+Press return to continue
+\end{verbatim}
+
+
+\printbibliography
+\end{document}
