@@ -12,15 +12,12 @@ inline bool isEven(BigInt& x){
 }
 
 inline void gcd_adjust(BigInt& x, BigInt& y, BigInt& A, BigInt& B){
-	if(isEven(A) && isEven(B)){
-		A.divideByTwo();
-		B.divideByTwo();
-	} else {
+	if(!isEven(A) || !isEven(B)){
 		A = sumSigned(A,y);
-		A.divideByTwo();
 		B = subtractSigned(B,x);
-		B.divideByTwo();
 	}
+	A.divideByTwo();
+	B.divideByTwo();
 }
 
 BigInt gcd(BigInt a, BigInt b, BigInt* u=0, BigInt* v=0){
@@ -33,8 +30,6 @@ BigInt gcd(BigInt a, BigInt b, BigInt* u=0, BigInt* v=0){
 		g = multiply(g, 2);
 	}
 	BigInt x=a, y=b;
-
-
 
 	while(!(!x)) { // x != 0
 		while(isEven(x)){
