@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#include "class_int_division.cpp"
+#include "class_int_square.cpp"
 
 inline bool isEven(BigInt& x){
 	return !(x[0]&1);
