@@ -70,7 +70,7 @@
 
 При написании программного кода пересчёт коэффициентов линейного представления
 из соображений симмтерии был выделен в отдельную функцию,
-принимающую аргументы по ссылке.
+принимающую аргументы по ссылке (см. рис.~\ref{bs_gcd_adjust}).
 
 \section*{Организация работы с длинными числами}
 Так как в конце алгоритма требуется мультипликативная операция~---
@@ -88,8 +88,12 @@
 
 
 \begin{figure}[ht]
-	\includegraphics[width=\textwidth]{lr3_divide-3.pdf}
-	\caption{Блок-схема алгоритма деления по Глухову: функция BigInt divide(BigInt x, BigInt y, BigInt* r)}
+	\includegraphics[width=0.6\textwidth]{lr4_gcd_adjust.pdf}
+	\caption{
+		Блок-схема итерации пересчёта коэффициентов линейного представления НОД:
+		функция inline void gcd\_adjust(BigInt\& x, BigInt\& y, BigInt\& A, BigInt\& B)
+	}
+	\label{bs_gcd_adjust}
 \end{figure}
 
 
