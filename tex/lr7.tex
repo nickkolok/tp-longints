@@ -1,0 +1,157 @@
+\documentclass[a4paper,12pt]{article} %размер бумаги устанавливаем А4, шрифт 12пунктов
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel} %используем русский и английский языки с переносами
+\usepackage{amssymb,amsfonts,amsmath,mathtext,enumerate,float,amsthm} %подключаем нужные пакеты расширений
+\usepackage[unicode,colorlinks=true,citecolor=black,linkcolor=black]{hyperref}
+%\usepackage[pdftex,unicode,colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{indentfirst} % включить отступ у первого абзаца
+\usepackage[dvips]{graphicx} %хотим вставлять рисунки?
+\graphicspath{{illustr/}}%путь к рисункам
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.} % Заменяем библиографию с квадратных скобок на точку:
+\makeatother %Смысл этих трёх строчек мне непонятен, но поверим "Запискам дебианщика"
+
+\usepackage{geometry} % Меняем поля страницы.
+\geometry{left=2cm}% левое поле
+\geometry{right=1cm}% правое поле
+\geometry{top=2cm}% верхнее поле
+\geometry{bottom=2cm}% нижнее поле
+
+\renewcommand{\theenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumi}{\arabic{enumi}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumii}{.\arabic{enumii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}.}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\theenumiii}{.\arabic{enumiii}}% Меняем везде перечисления на цифра.цифра
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.}% Меняем везде перечисления на цифра.цифра
+
+\sloppy
+
+
+%\renewcommand\normalsize{\fontsize{14}{25.2pt}\selectfont}
+
+\usepackage[backend=biber,style=gost-numeric,sorting=none]{biblatex}
+\addbibresource{all.bib}
+
+\input{lib/listingoptions}
+
+
+\begin{document}
+
+\setcounter{page}{2}
+
+\section*{Предварительные сведения}
+
+В качестве основного пособия по языку C++ используется \cite{chmyhalo}.
+
+
+Блок-схемы выполняются в соответствии с \cite{gost-block-scheme};
+ряд примеров имеется в \cite{wiki-block-scheme}.
+
+
+\section*{Постановка задачи}
+Составить алгоритм и написать программу
+для разложения длинного целого числа на множители.
+
+
+\section*{Выбор алгоритма}
+
+Алгоритм LSBGCD, описаныый в \cite{Glukhov},
+не представляется оптимальным для работы с длинными числами,
+записанными в недвоичной системе счисления:
+требуется либо <<дорогая>> операция умножения на $2^n$,
+либо многократное вычитание, если обобщить этот алгоритм,
+используя вместо 2 основание текущей системы счисления.
+
+Из альтернатив наиболее целесообразным представляется применение
+<<расширенного бинарного алгоритма Евклида>> \cite{gcd-binary}.
+
+При написании программного кода пересчёт коэффициентов линейного представления
+из соображений симмтерии был выделен в отдельную функцию,
+принимающую аргументы по ссылке (см. рис.~\ref{bs_gcd_adjust}).
+
+\section*{Организация работы с длинными числами}
+Так как в конце алгоритма требуется мультипликативная операция~---
+умножение на степень двойки~---
+в качестве основания системы счисления используется $10^4$.
+
+\section*{Исходный код программы}
+
+\lstinputlisting[caption={class\_int.cpp}]{../class_int.cpp}
+\lstinputlisting[caption={class\_int\_square.cpp}]{../class_int_square.cpp}
+\lstinputlisting[label=BigIntClass,caption={class\_int\_gcd.cpp}]{../class_int_gcd.cpp}
+\lstinputlisting[label=Summing,caption={gcd.cpp}]{../gcd.cpp}
+
+\section*{Блок-схемы}
+
+
+\begin{figure}[ht]
+	\includegraphics[width=0.6\textwidth]{lr4_gcd_adjust.pdf}
+	\caption{
+		Блок-схема итерации пересчёта коэффициентов линейного представления НОД:
+		функция inline void gcd\_adjust(BigInt\& x, BigInt\& y, BigInt\& A, BigInt\& B)
+	}
+	\label{bs_gcd_adjust}
+\end{figure}
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{lr4_gcd.pdf}
+	\caption{
+		Блок-схема итерации пересчёта коэффициентов линейного представления НОД:
+		функция BigInt gcd(BigInt a, BigInt b, BigInt* u=0, BigInt* v=0)
+	}
+	\label{bs_gcd}
+\end{figure}
+
+\clearpage
+
+\section*{Результаты работы программы}
+
+\subsection*{Запуск №1}
+
+\begin{verbatim}
+Введите первое число:
+125
+Введите второе число:
+225
+НОД(
+125
+,
+225
+) =
+25
+Коэффициенты линейного представления:
+56
+-31
+
+
+------------------
+(program exited with code: 0)
+Press return to continue
+\end{verbatim}
+
+\subsection*{Запуск №2}
+\begin{verbatim}
+Введите первое число:
+100000000000000000000000000
+Введите второе число:
+3000
+НОД(
+100000000000000000000000000
+,
+3000
+) =
+1000
+Коэффициенты линейного представления:
+142
+-4733333333333333333333333
+
+
+------------------
+(program exited with code: 0)
+Press return to continue
+\end{verbatim}
+
+\printbibliography
+\end{document}
