@@ -107,6 +107,23 @@ public:
 		return buf;
 	}
 
+	void addDigit(unsigned int digit){
+		m_pCoeff[0] += digit;
+		size_t s = size() - 1;
+		for(size_t i = 0; i < s; i++) {
+			if(m_pCoeff[i] >= m_nBase){
+				m_pCoeff[i] -= m_nBase;
+				m_pCoeff[i+1]++;
+			} else {
+				return;
+			}
+		}
+		if(m_pCoeff[s] >= m_nBase){
+			m_pCoeff.push_back(1);
+			m_pCoeff[s] -= m_nBase;
+		}
+	}
+
 	bool operator ! (){
 		int s = size() - 1;
 		while(s){
