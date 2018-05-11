@@ -59,3 +59,11 @@ BigInt raiseToPowerRingDirect(BigInt exp, BigInt pow, BigInt modulo){
 	return result;
 }
 
+void createMontgomery(BigInt N, BigInt* R, BigInt* w){
+	N.normalizeSize();
+	(*R) = BigInt(N.m_nExp, N.size()+1);
+	(*R)[N.size()] = 1;
+	BigInt R2(N.m_nExp, 2*N.size()+1);
+	R2[2*N.size()+1] = 1;
+	divide(R2, N, w);
+}
