@@ -124,6 +124,15 @@ public:
 		}
 	}
 
+	void pop_front(){
+		//cout << "Starting shift... ";
+		//writeToStream(cout);
+		m_pCoeff.erase(m_pCoeff.begin(), m_pCoeff.begin()+1);
+		//cout << endl << "Finished shift! ";
+		//writeToStream(cout);
+		//cout << endl;
+	}
+
 	bool operator ! (){
 		int s = size() - 1;
 		while(s){

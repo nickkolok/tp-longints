@@ -59,11 +59,57 @@ BigInt raiseToPowerRingDirect(BigInt exp, BigInt pow, BigInt modulo){
 	return result;
 }
 
-void createMontgomery(BigInt N, BigInt* R, BigInt* w){
+void createMontgomery(BigInt N, BigInt& R, BigInt& Ns, BigInt& w){
+	//clog << "Started createMontgomery()" << endl;
 	N.normalizeSize();
-	(*R) = BigInt(N.m_nExp, N.size()+1);
-	(*R)[N.size()] = 1;
+	R = BigInt(N.m_nExp, N.size()+1);
+	R[N.size()] = 1;
+//	Ns = ringReverse(N, R);
+	Ns = subtractNaive(R, ringReverse(N, R));
 	BigInt R2(N.m_nExp, 2*N.size()+1);
-	R2[2*N.size()+1] = 1;
-	divide(R2, N, w);
+	R2[2*N.size()] = 1;
+	divide(R2, N, &w);
+	//clog << "Finished createMontgomery()" << endl;
+}
+
+BigInt phiMontgomery(BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns){
+	BigInt t(N.m_nExp, 1, 0);
+	int s = x.size();
+	for(int i = 0; i < s; i++){
+		BigInt u = t;
+		BigInt xiy = multiply(y, x[i]);
+		u.addDigit(xiy[0]);
+		cout << u << endl;
+		int v = (u[0]*Ns[0])%x.m_nBase;
+		t = sumSigned(t, xiy);
+		//t = subtractSigned(xiy, t);
+		t = sumSigned(t, multiply(N,v));
+		cout << t << " " << xiy << " ";
+		multiply(N,v).writeToStream(cout);
+		cout << " " << endl;
+		t.pop_front();
+	}
+	if (compareAbs(t, N) > 0){
+		return subtractNaive(t, N);
+	}
+	return t;
+}
+
+BigInt multiplyRingMontgomery(
+	BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns, BigInt& w
+){
+	return (
+		phiMontgomery(w, phiMontgomery(
+				x, y
+				, N, R, Ns
+			), N, R, Ns
+		)
+	);
+}
+
+BigInt multiplyRing(BigInt x, BigInt y, BigInt N){
+	BigInt R(4), Ns(4), w(4);
+	createMontgomery(N, R, Ns, w);
+	cout << "N = " << N << "  R = " << R << "  N' = " << Ns << "  w = " << w << endl;
+	return multiplyRingMontgomery(x, y, N, R, Ns, w);
 }
