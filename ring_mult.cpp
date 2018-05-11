@@ -26,7 +26,7 @@ int main(){
 			b3 = multiplyRingDirect(b1, b2, modulo);
 		break;
 		case '^':
-			//b3 = subtractRing(b1, b2, modulo);
+			b3 = raiseToPowerRingDirect(b1, b2, modulo);
 		break;
 		default:
 			cout << "Некорректная операция" << endl;

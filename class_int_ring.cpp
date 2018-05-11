@@ -44,3 +44,18 @@ BigInt multiplyRingDirect(BigInt x, BigInt y, BigInt modulo){
 	divide(t, modulo, &remainder);
 	return remainder;
 }
+
+BigInt raiseToPowerRingDirect(BigInt exp, BigInt pow, BigInt modulo){
+	BigInt multiplier = exp;
+	BigInt restPow = pow;
+	BigInt result(exp.m_nExp);
+	result[0] = 1;
+	while (!(!restPow)){
+		if(restPow.divideByTwo()){
+			divide(multiply(result, multiplier), modulo, &result);
+		}
+		divide(square(multiplier), modulo, &multiplier);
+	}
+	return result;
+}
+
