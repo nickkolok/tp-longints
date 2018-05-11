@@ -129,7 +129,7 @@ for(var i = 0; i < rows.length; i++){
 			'	</draw:custom-shape>';
 
 
-		currentHeight += sizeB + interval;
+		currentHeight += sizeB/2 + interval;
 
 		generatedText +=
 			generateConnector('id'+currentId, 'id'+(currentId+1))+'\n\n';
