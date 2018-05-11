@@ -37,3 +37,10 @@ BigInt subtractRing(BigInt x, BigInt y, BigInt modulo){
 	}
 	return t;
 }
+
+BigInt multiplyRingDirect(BigInt x, BigInt y, BigInt modulo){
+	BigInt t = multiply(x, y);
+	BigInt remainder(x.m_nExp);
+	divide(t, modulo, &remainder);
+	return remainder;
+}
