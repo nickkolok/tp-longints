@@ -21,3 +21,19 @@ BigInt ringReverse(BigInt modulo, BigInt x){
 	}
 	return remainder;
 }
+
+BigInt sumRing(BigInt x, BigInt y, BigInt modulo){
+	BigInt t = sumNaive(x, y);
+	if(compareAbs(t, modulo) > 0) {
+		return subtractNaive(t, modulo);
+	}
+	return t;
+}
+
+BigInt subtractRing(BigInt x, BigInt y, BigInt modulo){
+	BigInt t = subtractSigned(x, y);
+	if(t.m_bSign) {
+		return subtractNaive(modulo, t);
+	}
+	return t;
+}
