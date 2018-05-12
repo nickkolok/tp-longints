@@ -73,30 +73,17 @@ void createMontgomery(BigInt N, BigInt& R, BigInt& Ns, BigInt& w){
 }
 
 BigInt phiMontgomery(BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns){
-	BigInt t(N.m_nExp, 1, 0);
-	x.normalizeSize();
-	int s = x.size();
-	for(int i = 0; i < s; i++){
-		BigInt xiy = multiply(y, x[i]);
-		int u=(xiy[0]+t[0])%x.m_nBase;
-		cout << "u = " << u << endl;
-		int v = (u*Ns[0])%x.m_nBase;
-		cout << "v = " << v << endl;
-		t = sumSigned(t, xiy);
-		//t = subtractSigned(xiy, t);
-		t = sumSigned(t, multiply(N,v));
-		cout << "t = " << t << "  x_i y = " << xiy << "  vN = ";
-		multiply(N,v).writeToStream(cout);
-		cout << " " << endl;
-		t.pop_front();
-	}
-	if (compareAbs(t, N) > 0){
-		cout << "t < N" << endl;
+	BigInt xy = multiply(x,y);
+	BigInt m = multiply(xy, Ns);
+	m.m_pCoeff.resize(R.size()-1);
+	BigInt t = sumNaive(xy,  multiply(m,N));
+	t.pop_front(R.size()-1);
+	if(compareAbs(t, N) > 0) {
 		t = subtractNaive(t, N);
-		cout << "t = " << t << endl;
 	}
 	cout << "phi(" << x << ", " << y << ") = " << t << endl;
 	return t;
+
 }
 
 BigInt multiplyRingMontgomery(
