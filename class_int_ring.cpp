@@ -87,6 +87,23 @@ BigInt multiplyDigits(BigInt x1, BigInt x2, int digits){
 	return y;
 }
 
+BigInt square(BigInt x, int digits){
+	int size = x.size();
+	BigInt y(x.m_nExp, digits + 1);
+	for (int i = 0; (2*i)<digits && (i < size); i++){
+		y[2*i    ] = x[i]   * x[i];
+		y[2*i + 1] = y[2*i] / y.m_nBase;
+		y[2*i    ] = y[2*i] % y.m_nBase;
+	}
+	for (int i = 0; i < size; i++) {
+		for (int j = i + 1; (j < digits-i)&&(j < size); j++) {
+			y[i + j    ] += (x[i] * x[j]) << 1;
+			y[i + j + 1] += y[i + j] / y.m_nBase;
+			y[i + j    ]  = y[i + j] % y.m_nBase;
+		}
+	}
+	return y;
+}
 
 BigInt phiMontgomery(BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns){
 	int rs = R.size()-1;
