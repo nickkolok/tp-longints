@@ -133,6 +133,10 @@ BigInt multiplyRingMontgomery(
 }
 
 BigInt multiplyRing(BigInt x, BigInt y, BigInt N){
+	if(isEven(N) || N[0]%5==0){
+		cout << "Monygomery unapplicable" << endl;
+		return multiplyRingDirect(x,y,N);
+	}
 	BigInt R(4), Ns(4), w(4);
 	createMontgomery(N, R, Ns, w);
 	cout << "N = " << N << "  R = " << R << "  N' = " << Ns << "  w = " << w << endl;
