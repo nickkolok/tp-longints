@@ -125,12 +125,12 @@ public:
 	}
 
 	void pop_front(int shift = 1){
-		cout << "Starting shift... ";
-		writeToStream(cout);
+		//cout << "Starting shift... ";
+		//writeToStream(cout);
 		m_pCoeff.erase(m_pCoeff.begin(), m_pCoeff.begin()+shift);
-		cout << endl << "Finished shift! ";
-		writeToStream(cout);
-		cout << endl;
+		//cout << endl << "Finished shift! ";
+		//writeToStream(cout);
+		//cout << endl;
 	}
 
 	bool operator ! (){

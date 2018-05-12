@@ -23,8 +23,6 @@ int main(){
 
 	switch(act){
 		case '*':
-			b3 = multiplyRingDirect(b1, b2, modulo);
-			cout << b3 << endl;
 			b3 = multiplyRing(b1, b2, modulo);
 		break;
 		case '^':

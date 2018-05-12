@@ -60,16 +60,13 @@ BigInt raiseToPowerRingDirect(BigInt exp, BigInt pow, BigInt modulo){
 }
 
 void createMontgomery(BigInt N, BigInt& R, BigInt& Ns, BigInt& w){
-	//clog << "Started createMontgomery()" << endl;
 	N.normalizeSize();
 	R = BigInt(N.m_nExp, N.size()+1);
 	R[N.size()] = 1;
-//	Ns = ringReverse(N, R);
 	Ns = subtractNaive(R, ringReverse(R, N));
 	BigInt R2(N.m_nExp, 2*N.size()+1);
 	R2[2*N.size()] = 1;
 	divide(R2, N, &w);
-	//clog << "Finished createMontgomery()" << endl;
 }
 
 
@@ -97,7 +94,7 @@ BigInt phiMontgomery(BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns){
 	if(compareAbs(t, N) > 0) {
 		t = subtractNaive(t, N);
 	}
-	cout << "phi(" << x << ", " << y << ") = " << t << endl;
+	//cout << "phi(" << x << ", " << y << ") = " << t << endl;
 	return t;
 
 }
@@ -116,11 +113,10 @@ BigInt multiplyRingMontgomery(
 
 BigInt multiplyRing(BigInt x, BigInt y, BigInt N){
 	if(isEven(N) || N[0]%5==0){
-		cout << "Monygomery unapplicable" << endl;
 		return multiplyRingDirect(x,y,N);
 	}
 	BigInt R(4), Ns(4), w(4);
 	createMontgomery(N, R, Ns, w);
-	cout << "N = " << N << "  R = " << R << "  N' = " << Ns << "  w = " << w << endl;
+	//cout << "N = " << N << "  R = " << R << "  N' = " << Ns << "  w = " << w << endl;
 	return multiplyRingMontgomery(x, y, N, R, Ns, w);
 }
