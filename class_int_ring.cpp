@@ -120,3 +120,29 @@ BigInt multiplyRing(BigInt x, BigInt y, BigInt N){
 	//cout << "N = " << N << "  R = " << R << "  N' = " << Ns << "  w = " << w << endl;
 	return multiplyRingMontgomery(x, y, N, R, Ns, w);
 }
+
+
+BigInt powerRingMontgomery(
+	BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns, BigInt& w
+){
+	BigInt the1 = BigInt(x.m_nExp, 1 ,1);
+	BigInt result = phiMontgomery(the1, w, N, R, Ns);
+	BigInt multiplier = phiMontgomery(x, w, N, R, Ns);;
+	while (!(!y)){
+		if(y.divideByTwo()){
+			result = phiMontgomery(result, multiplier, N, R, Ns);
+		}
+		multiplier = phiMontgomery(multiplier, multiplier, N, R, Ns);
+	}
+	return phiMontgomery(result, the1, N, R, Ns);
+}
+
+BigInt powerRing(BigInt x, BigInt y, BigInt N){
+	if(isEven(N) || N[0]%5==0){
+		return raiseToPowerRingDirect(x,y,N);
+	}
+	BigInt R(4), Ns(4), w(4);
+	createMontgomery(N, R, Ns, w);
+	//cout << "N = " << N << "  R = " << R << "  N' = " << Ns << "  w = " << w << endl;
+	return powerRingMontgomery(x, y, N, R, Ns, w);
+}
