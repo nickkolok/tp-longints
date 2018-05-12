@@ -9,12 +9,12 @@ using namespace std;
 int main(){
 
 	cout << "Введите модуль кольца вычетов:" << endl;
-	BigInt modulo(cin, 2);
+	BigInt modulo(cin, 4);
 
 	cout << "Введите первый операнд:" << endl;
-	BigInt b1(cin, 2);
+	BigInt b1(cin, 4);
 	cout << "Введитe второй операнд:" << endl;
-	BigInt b2(cin, 2);
+	BigInt b2(cin, 4);
 	cout << "Введите знак операции:  *  или  ^" << endl;
 	char act;
 	cin >> act;

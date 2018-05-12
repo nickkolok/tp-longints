@@ -65,7 +65,7 @@ void createMontgomery(BigInt N, BigInt& R, BigInt& Ns, BigInt& w){
 	R = BigInt(N.m_nExp, N.size()+1);
 	R[N.size()] = 1;
 //	Ns = ringReverse(N, R);
-	Ns = subtractNaive(R, ringReverse(N, R));
+	Ns = subtractNaive(R, ringReverse(R, N));
 	BigInt R2(N.m_nExp, 2*N.size()+1);
 	R2[2*N.size()] = 1;
 	divide(R2, N, &w);
@@ -74,24 +74,28 @@ void createMontgomery(BigInt N, BigInt& R, BigInt& Ns, BigInt& w){
 
 BigInt phiMontgomery(BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns){
 	BigInt t(N.m_nExp, 1, 0);
+	x.normalizeSize();
 	int s = x.size();
 	for(int i = 0; i < s; i++){
-		BigInt u = t;
 		BigInt xiy = multiply(y, x[i]);
-		u.addDigit(xiy[0]);
-		cout << u << endl;
-		int v = (u[0]*Ns[0])%x.m_nBase;
+		int u=(xiy[0]+t[0])%x.m_nBase;
+		cout << "u = " << u << endl;
+		int v = (u*Ns[0])%x.m_nBase;
+		cout << "v = " << v << endl;
 		t = sumSigned(t, xiy);
 		//t = subtractSigned(xiy, t);
 		t = sumSigned(t, multiply(N,v));
-		cout << t << " " << xiy << " ";
+		cout << "t = " << t << "  x_i y = " << xiy << "  vN = ";
 		multiply(N,v).writeToStream(cout);
 		cout << " " << endl;
 		t.pop_front();
 	}
 	if (compareAbs(t, N) > 0){
-		return subtractNaive(t, N);
+		cout << "t < N" << endl;
+		t = subtractNaive(t, N);
+		cout << "t = " << t << endl;
 	}
+	cout << "phi(" << x << ", " << y << ") = " << t << endl;
 	return t;
 }
 
