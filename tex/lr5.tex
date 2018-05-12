@@ -102,6 +102,8 @@ $N=1000000001$, $\beta=10^4$, $x=37000$, $y=60000$ можно предполож
 При умножении в кольце не по Монтгомери затруднительно предложить оптимизацию (см. рис. \ref{bs_multiply_direct});
 с возведением в степень дела обстоят иначе (см. рис. \ref{bs_power_direct}).
 
+
+
 \section*{Исходный код программы}
 
 \lstinputlisting[caption={class\_int.cpp}]{../class_int.cpp}
@@ -114,7 +116,6 @@ $N=1000000001$, $\beta=10^4$, $x=37000$, $y=60000$ можно предполож
 \lstinputlisting[caption={ring\_mult.cpp}]{../ring_mult.cpp}
 
 \section*{Блок-схемы}
-
 
 \begin{figure}[ht]
 	\centering
@@ -184,6 +185,16 @@ $N=1000000001$, $\beta=10^4$, $x=37000$, $y=60000$ можно предполож
 		функция void createMontgomery(BigInt N, BigInt\& R, BigInt\& Ns, BigInt\& w)
 	}
 	\label{bs_lr5_createMontgomery}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.64\textwidth]{lr5_phiMontgomery.pdf}
+	\caption{
+		Блок-схема алгоритма вычисления $\varphi_R$ для алгоритма Монтгомери:
+		функция BigInt phiMontgomery(BigInt x, BigInt y, BigInt\& N, BigInt\& R, BigInt\& Ns)
+	}
+	\label{bs_lr5_phiMontgomery}
 \end{figure}
 
 
