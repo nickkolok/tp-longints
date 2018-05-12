@@ -72,10 +72,27 @@ void createMontgomery(BigInt N, BigInt& R, BigInt& Ns, BigInt& w){
 	//clog << "Finished createMontgomery()" << endl;
 }
 
+
+BigInt multiplyDigits(BigInt x1, BigInt x2, int digits){
+	int size1 = x1.size(), size2 = x2.size();
+	BigInt y(x1.m_nExp, digits + 1);
+	for (int i = 0; i < size1; i++) {
+		for (int j = 0; (j < digits-i)&&(j < size2); j++) {
+			y[i + j    ] += x1[i] * x2[j];
+			y[i + j + 1] += y[i + j] / y.m_nBase;
+			y[i + j    ]  = y[i + j] % y.m_nBase;
+		}
+	}
+	y.m_bSign = x1.m_bSign ^ x2.m_bSign;
+	return y;
+}
+
+
 BigInt phiMontgomery(BigInt x, BigInt y, BigInt& N, BigInt& R, BigInt& Ns){
+	int rs = R.size()-1;
 	BigInt xy = multiply(x,y);
-	BigInt m = multiply(xy, Ns);
-	m.m_pCoeff.resize(R.size()-1);
+	BigInt m = multiplyDigits(xy, Ns,rs);
+	m.m_pCoeff.resize(rs);
 	BigInt t = sumNaive(xy,  multiply(m,N));
 	t.pop_front(R.size()-1);
 	if(compareAbs(t, N) > 0) {
