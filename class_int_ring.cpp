@@ -87,7 +87,7 @@ BigInt multiplyDigits(BigInt x1, BigInt x2, int digits){
 	return y;
 }
 
-BigInt square(BigInt x, int digits){
+BigInt squareDigits(BigInt x, int digits){
 	int size = x.size();
 	BigInt y(x.m_nExp, digits + 1);
 	for (int i = 0; (2*i)<digits && (i < size); i++){
