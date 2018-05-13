@@ -21,6 +21,11 @@ BigInt squareRootIteration(BigInt origin, BigInt currentApproximation){
 
 BigInt squareRoot(BigInt x){
 	x.normalizeSize();
+	//clog << "Counting square root from " << x << endl;
+	if(x.m_bSign){
+		//clog << "Negative number!" << endl;
+		return BigInt(x.m_nExp); // 0
+	}
 	int size = x.size();
 	if(size==1){
 		return BigInt(x.m_nExp, 1, sqrt(x[0]));
