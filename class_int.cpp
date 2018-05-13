@@ -288,7 +288,7 @@ BigInt sumSigned(BigInt x1, BigInt x2){
 	return res;
 }
 
-BigInt subtractSigned(BigInt x1, BigInt x2){
+BigInt subtractSigned(const BigInt& x1, BigInt x2){
 	x2.m_bSign = !x2.m_bSign;
 	return sumSigned(x1, x2);
 }
