@@ -49,6 +49,8 @@ BigInt divide(BigInt x, BigInt y, BigInt* r = 0){
 	x.normalizeSize();
 	y.normalizeSize();
 
+	//clog << "Dividing " << x << " by " << y << endl;
+
 	if (y.size() == 1){
 		return divideByDigit(x, y[0], r);
 	}
