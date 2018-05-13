@@ -73,10 +73,9 @@ BigInt mthRootIteration(BigInt origin,BigInt currentApproximation,int m){
 	m-1), m);
 }
 
-BigInt mthRoot(BigInt x, int m){
+BigInt mthRoot(BigInt x, int m, BigInt currentIteration){
 	x.normalizeSize();
 	BigInt previousIteration = x;
-	BigInt currentIteration = x;
 	do {
 		previousIteration = currentIteration;
 		if(!previousIteration){
@@ -118,4 +117,8 @@ BigInt mthRoot(BigInt x, int m){
 		probeProduct = raiseToPower(currentIteration, m);
 	}while(compareAbs(probeProduct, x)<0);
 	return previousIteration;
+}
+
+BigInt mthRoot(BigInt x, int m){
+	return mthRoot(x, m, x);
 }
