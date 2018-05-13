@@ -71,21 +71,21 @@
 
 
 \begin{figure}[ht]
-	\includegraphics[width=0.6\textwidth]{lr4_gcd_adjust.pdf}
+	\centering
+	\includegraphics[width=0.7\textwidth]{lr7_findFactors-1.pdf}
 	\caption{
-		Блок-схема итерации пересчёта коэффициентов линейного представления НОД:
-		функция inline void gcd\_adjust(BigInt\& x, BigInt\& y, BigInt\& A, BigInt\& B)
+		Блок-схема алгоритма факторизации: функция Factors findFactors(BigInt n).
+		Часть 1: инициализация и вынос множителей 2 и 3.
 	}
-	\label{bs_gcd_adjust}
 \end{figure}
 
 \begin{figure}[ht]
-	\includegraphics[width=\textwidth]{lr4_gcd.pdf}
+	\centering
+	\includegraphics[width=\textwidth]{lr7_findFactors-2.pdf}
 	\caption{
-		Блок-схема итерации пересчёта коэффициентов линейного представления НОД:
-		функция BigInt gcd(BigInt a, BigInt b, BigInt* u=0, BigInt* v=0)
+		Блок-схема алгоритма факторизации: функция Factors findFactors(BigInt n).
+		Часть 2: перебор множителей вида $6p\pm2$ от 5 до $[\sqrt[3]{n}\;]$
 	}
-	\label{bs_gcd}
 \end{figure}
 
 \clearpage
