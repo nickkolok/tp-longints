@@ -63,7 +63,9 @@ BigInt divide(BigInt x, BigInt y, BigInt* r = 0){
 		return result;
 	}
 	if (cmp == 0) {
-		*r = result;
+		if(r){
+			*r = result;
+		}
 		return BigInt(x.m_nExp, 1, 1);
 	}
 
