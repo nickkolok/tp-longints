@@ -64,7 +64,7 @@ BigInt mthRootIteration(BigInt origin,BigInt currentApproximation,int m){
 						currentApproximation,
 						m-1
 					);
-
+	//clog << raised << endl;
 	BigInt quotient =
 			divide(
 				origin,
@@ -73,7 +73,7 @@ BigInt mthRootIteration(BigInt origin,BigInt currentApproximation,int m){
 					m-1
 				)
 			);
-
+	//cout << quotient << endl;
 	return divideByDigit(multiply(
 		sumSigned(
 			currentApproximation,
@@ -84,6 +84,7 @@ BigInt mthRootIteration(BigInt origin,BigInt currentApproximation,int m){
 
 BigInt mthRoot(BigInt x, int m, BigInt currentIteration){
 	x.normalizeSize();
+	//clog << "Counting " << m <<"-th root from " << x << endl;
 	BigInt previousIteration = x;
 	do {
 		previousIteration = currentIteration;
@@ -94,8 +95,8 @@ BigInt mthRoot(BigInt x, int m, BigInt currentIteration){
 		if(!currentIteration){
 			currentIteration[0]=1;
 		}
-		clog << "Текущее приближение:" << endl;
-		clog << currentIteration << endl;
+		//clog << "Текущее приближение:" << endl;
+		//clog << currentIteration << endl;
 	}while(compareAbs(previousIteration, currentIteration) > 0);
 
 	BigInt probeProduct = raiseToPower(previousIteration, m);
