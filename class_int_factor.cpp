@@ -65,10 +65,10 @@ Factors findFactors(BigInt n){
 		}
 
 	}while(true);
-	//clog << "n became " << n << endl;
+	clog << "n became " << n << endl;
 	BigInt root3 = mthRoot(n, 3);
 
-	//clog << "Cubic root: " << root3 << endl;
+	clog << "Cubic root: " << root3 << endl;
 
 	BigInt border = BigInt(nExp, 1, 5);
 	while(compareAbs(border, root3)<=0){
@@ -118,12 +118,12 @@ Factors findFactors(BigInt n){
 		return factors;
 	}
 
-	clog << "Starting Leman..." << endl;
+	//clog << "Starting Leman..." << endl;
 
 	BigInt kn(nExp);
 	BigInt root6u = mthRoot(n, 6, root3); //TODO: square root?
 	root6u.addDigit(1);
-	for(BigInt k(nExp,1,1); compareAbs(k,root3)<0; k.addDigit(1)){
+	for(BigInt k(nExp,1,1); compareAbs(k,root3)<=0; k.addDigit(1)){
 		clog << "k = " << k << endl;
 		kn = sumNaive(kn, n);
 		BigInt sqrt_kn_2 = multiply(squareRoot(kn),2);
@@ -142,10 +142,11 @@ Factors findFactors(BigInt n){
 				)
 			)
 		);
-		upTo.addDigit(2);
+		upTo.addDigit(4);
 		upTo.normalizeSize();
+		clog << "For a from " << sqrt_kn_2 << " to " << upTo << endl;
 		for(BigInt a = sqrt_kn_2; compareAbs(a, upTo) < 0; a.addDigit(1)){
-			//clog << "a = " << a << endl;
+			clog << "a = " << a << endl;
 			BigInt c = subtractSigned(
 				square(a),
 				kn_4
@@ -154,11 +155,23 @@ Factors findFactors(BigInt n){
 			if (c.m_bSign){
 				continue;
 			}
-			//clog << "c = " << c << endl;
 			BigInt b = squareRoot(c);
-			if(!compareAbs(square(b), c)){
+			BigInt b2 = square(b);
+			//clog << "b = " << b << endl;
+			//clog << "b2 = " << b2 << endl;
+			//clog << "c = " << c << endl;
+			if(!compareAbs(b2, c)){
+				//clog << "Good a!" << endl;
 				BigInt p = gcdNoCoeff(sumNaive(a, b), n);
-				if(!compareAbs(p, big1)){
+				//clog << p << " " << compareAbs(p, big1) << " " << compareAbs(p, n) << endl;
+				if(compareAbs(p, big1) && compareAbs(p, n)){
+					factors.push_back(p);
+					factors.push_back(divide(n,p));
+					return factors;
+				}
+				p = gcdNoCoeff(subtractSigned(a, b), n);
+				//clog << p << endl;
+				if(compareAbs(p, big1) && compareAbs(p, n)){
 					factors.push_back(p);
 					factors.push_back(divide(n,p));
 					return factors;
