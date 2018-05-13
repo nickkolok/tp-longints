@@ -144,9 +144,9 @@ Factors findFactors(BigInt n){
 		);
 		upTo.addDigit(4);
 		upTo.normalizeSize();
-		clog << "For a from " << sqrt_kn_2 << " to " << upTo << endl;
+		//clog << "For a from " << sqrt_kn_2 << " to " << upTo << endl;
 		for(BigInt a = sqrt_kn_2; compareAbs(a, upTo) < 0; a.addDigit(1)){
-			clog << "a = " << a << endl;
+			//clog << "a = " << a << endl;
 			BigInt c = subtractSigned(
 				square(a),
 				kn_4
