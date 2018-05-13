@@ -79,7 +79,13 @@ BigInt mthRoot(BigInt x, int m){
 	BigInt currentIteration = x;
 	do {
 		previousIteration = currentIteration;
+		if(!previousIteration){
+			previousIteration[0]=1;
+		}
 		currentIteration = mthRootIteration(x, previousIteration, m);
+		if(!currentIteration){
+			currentIteration[0]=1;
+		}
 		clog << "Текущее приближение:" << endl;
 		clog << currentIteration << endl;
 	}while(compareAbs(previousIteration, currentIteration) > 0);
