@@ -91,10 +91,10 @@ Factors findFactors(BigInt n){
 		}
 
 	}while(true);
-	clog << "n became " << n << endl;
+	//clog << "n became " << n << endl;
 	BigInt root3 = mthRoot(n, 3);
 
-	clog << "Cubic root: " << root3 << endl;
+	//clog << "Cubic root: " << root3 << endl;
 
 	BigInt border = BigInt(nExp, 1, 5);
 	while(compareAbs(border, root3)<=0){
@@ -113,9 +113,9 @@ Factors findFactors(BigInt n){
 			brick.addDigit(6);
 		}
 
-		clog << "probe = " << probe << endl;
+		//clog << "probe = " << probe << endl;
 		BigInt divisor = gcdNoCoeff(n, probe);
-		clog << divisor << endl;
+		//clog << divisor << endl;
 
 		while(compareAbs(divisor, big1) > 0){
 			clog << "Found a divisor: " << divisor << endl;
@@ -134,22 +134,66 @@ Factors findFactors(BigInt n){
 			divisor = gcdNoCoeff(n, probe);
 		}
 		border = brick;
-
-/*
-		while(compareAbs(divisor, big1) > 0){
-			for(BigInt probePrime = border; compareAbs(probePrime, brick) < 0; probePrime.addDigit(2)){
-				BigInt probeQuot = divide(divisor, probePrime, rem);
-				while(!rem){
-					divisor = probeQuot;
-					n = divide(n,
-				}
-			}
-			root3 = mthRoot(n, 3);
+	}
+	n.normalizeSize();
+	BigInt big23 = BigInt(nExp, 1, 23);
+	if(compareAbs(n, big23) < 0){
+		if(compareAbs(n, big1) > 0){
+			factors.push_back(n);
 		}
-*/
+		return factors;
 	}
 
+	clog << "Starting Leman..." << endl;
 
+	BigInt kn(nExp);
+	BigInt root6u = mthRoot(n, 6, root3); //TODO: square root?
+	root6u.addDigit(1);
+	for(BigInt k(nExp,1,1); compareAbs(k,root3)<0; k.addDigit(1)){
+		clog << "k = " << k << endl;
+		kn = sumNaive(kn, n);
+		BigInt sqrt_kn_2 = multiply(squareRoot(kn),2);
+		BigInt kn_4 = multiply(kn, 4);
+		kn_4.normalizeSize();
+		BigInt upTo = sumNaive(
+			sqrt_kn_2,
+			divide(
+				root6u,
+				subtractNaive(
+					multiply(
+						squareRoot(k),
+						4
+					),
+					1
+				)
+			)
+		);
+		upTo.addDigit(2);
+		upTo.normalizeSize();
+		for(BigInt a = sqrt_kn_2; compareAbs(a, upTo) < 0; a.addDigit(1)){
+			//clog << "a = " << a << endl;
+			BigInt c = subtractSigned(
+				square(a),
+				kn_4
+			);
+			//c.normalizeSize();
+			if (c.m_bSign){
+				continue;
+			}
+			//clog << "c = " << c << endl;
+			BigInt b = squareRoot(c);
+			if(!compareAbs(square(b), c)){
+				BigInt p = gcdNoCoeff(sumNaive(a, b), n);
+				if(!compareAbs(p, big1)){
+					factors.push_back(p);
+					factors.push_back(divide(n,p));
+					return factors;
+				}
+			}
+		}
+	}
+
+	factors.push_back(n);
 	return factors;
 }
 
