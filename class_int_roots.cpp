@@ -30,7 +30,7 @@ BigInt squareRoot(BigInt x){
 	if(size==1){
 		return BigInt(x.m_nExp, 1, sqrt(x[0]));
 	}
-	BigInt y(x.m_nExp, size/2 + 1);
+	BigInt y(x.m_nExp, size/2 + 3);
 
 	// Choosing initial approximation
 
@@ -38,18 +38,22 @@ BigInt squareRoot(BigInt x){
 		x.m_pCoeff.push_back(0);
 		size++;
 	}
-	y[size/2]=sqrt(x[size-1]+1);
+	y[size/2]=sqrt(x[size-1])+1;
 
-	clog << "Начальное приближение:" << endl;
-	clog << y << endl;
+	if(!y){
+		y[0]=1;
+	}
+	y.normalizeSize();
+	//clog << "Начальное приближение:" << endl;
+	//clog << y << endl;
 
 	BigInt previousIteration = y;
 	BigInt currentIteration = y;
 	do {
 		previousIteration = currentIteration;
 		currentIteration = squareRootIteration(x, previousIteration);
-		clog << "Текущее приближение:" << endl;
-		clog << currentIteration << endl;
+		//clog << "Текущее приближение:" << endl;
+		//clog << currentIteration << endl;
 	}while(compareAbs(previousIteration, currentIteration) > 0);
 
 	return previousIteration;
