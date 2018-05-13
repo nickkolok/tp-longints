@@ -8,6 +8,7 @@ using namespace std;
 #include "class_int_square.cpp"
 
 BigInt divideByDigit(BigInt x, int d, BigInt* r = 0){
+	x.normalizeSize();
 	int s = x.size();
 	BigInt y(x.m_nExp, s);
 
