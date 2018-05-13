@@ -65,14 +65,14 @@ Factors findFactors(BigInt n){
 		}
 
 	}while(true);
-	clog << "n became " << n << endl;
+	//clog << "n became " << n << endl;
 	BigInt root3 = mthRoot(n, 3);
 
-	clog << "Cubic root: " << root3 << endl;
+	//clog << "Cubic root: " << root3 << endl;
 
 	BigInt border = BigInt(nExp, 1, 5);
 	while(compareAbs(border, root3)<=0){
-		clog << "border = " << border << endl;
+		//clog << "border = " << border << endl;
 
 		BigInt brick = border;
 
@@ -92,11 +92,11 @@ Factors findFactors(BigInt n){
 		//clog << divisor << endl;
 
 		while(compareAbs(divisor, big1) > 0){
-			clog << "Found a divisor: " << divisor << endl;
+			//clog << "Found a divisor: " << divisor << endl;
 			n = divide(n, divisor);
-			clog << "n became " << n << endl;
+			//clog << "n became " << n << endl;
 			root3 = mthRoot(n, 3);
-			clog << "Cubic root became: " << root3 << endl;
+			//clog << "Cubic root became: " << root3 << endl;
 			for(BigInt probePrime = border; compareAbs(divisor, big1) > 0; probePrime.addDigit(2)){
 				BigInt probeQuot = divide(divisor, probePrime, &rem);
 				while(!rem){
@@ -110,6 +110,8 @@ Factors findFactors(BigInt n){
 		border = brick;
 	}
 	n.normalizeSize();
+
+
 	BigInt big23 = BigInt(nExp, 1, 23);
 	if(compareAbs(n, big23) < 0){
 		if(compareAbs(n, big1) > 0){
@@ -124,7 +126,7 @@ Factors findFactors(BigInt n){
 	BigInt root6u = mthRoot(n, 6, root3); //TODO: square root?
 	root6u.addDigit(1);
 	for(BigInt k(nExp,1,1); compareAbs(k,root3)<=0; k.addDigit(1)){
-		clog << "k = " << k << endl;
+		//clog << "k = " << k << " of " << root3 << endl;
 		kn = sumNaive(kn, n);
 		BigInt sqrt_kn_2 = multiply(squareRoot(kn),2);
 		BigInt kn_4 = multiply(kn, 4);
