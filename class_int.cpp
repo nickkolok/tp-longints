@@ -80,7 +80,7 @@ public:
 	}
 
 	void normalizeSize(){
-		while(!m_pCoeff.back()){
+		while(size()>1 && !m_pCoeff.back()){
 			m_pCoeff.pop_back();
 		}
 	}
@@ -253,6 +253,8 @@ BigInt subtractNaive(BigInt x1, BigInt x2) {
 }
 
 BigInt sumSigned(BigInt x1, BigInt x2){
+	x1.normalizeSize();
+	x2.normalizeSize();
 	BigInt res(x1.m_nExp, max(x1.size(), x2.size()) + 1);
 	if(!x1.m_bSign && !x2.m_bSign) {
 		res = sumNaive(x1, x2);
